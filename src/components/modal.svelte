@@ -2,7 +2,7 @@
 
 </script>
 
-<div class="custModal">
+<div class="custModal d-none">
     <div class="custModalHeader">
         
     </div>

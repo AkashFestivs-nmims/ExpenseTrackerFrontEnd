@@ -6,7 +6,7 @@
     import Modal from "./components/modal.svelte";
 
 
-    // let objArray = [{'amount':'1000' , 'imgUrl': '/icons/blue1.jpg'},{'amount':'2000' , 'imgUrl': '/icons/lineblue.jpg'},{'amount':'3000' , 'imgUrl': '/icons/header.png'},{'amount':'4000' , 'imgUrl': '/icons/facebook.gif'}]
+     let objArray = [{'amount':'1000' , 'imgUrl': '/icons/blue1.jpg'},{'amount':'2000' , 'imgUrl': '/icons/lineblue.jpg'},{'amount':'3000' , 'imgUrl': '/icons/header.png'},{'amount':'4000' , 'imgUrl': '/icons/facebook.gif'}]
 
 </script>
 
@@ -18,19 +18,14 @@
 <main>
     <div class="row">
 
-            <!-- {#each objArray as obj}
+            {#each objArray as obj}
                 <div class="col-md-2 d-flex justify-content-center p-3">
 
                     <CashAccount amount={obj.amount} imgUrl={obj.imgUrl}/>
 
                 </div>
-            {/each} -->
+            {/each}
 
-            <!-- <div class="col-md-2 d-flex justify-content-center p-3">
-
-                <CashAccount amount='20000' imgUrl='/icons/blue1.jpg'/>
-
-            </div> -->
 
     </div>
 </main>
