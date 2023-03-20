@@ -32,8 +32,12 @@ footer {
 }
 
 footer .top {
-    height: 30px;
+    height: 28px;
     background-color: rgba(56, 170, 231, 0.382);
+    background-image: url('/icons/lineblue.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 footer .bottom {
