@@ -1,72 +1,127 @@
 <script>
 
+import { isModalOpen } from "../store/modal-store";
+import { fade } from 'svelte/transition';
+
+ 
+
+    function closeModal(e) {
+        isModalOpen.set(!isModalOpen)
+    }
+
+ 
+
+    function mainBodyClick(e) {
+        e.stopPropagation();
+    }
+
 </script>
 
-<div class="custModal d-none">
-    <div class="custModalHeader">
-        
-    </div>
-    <div class="custModalBody row">
-        <div class="credit col-md-6">
-            <img src="/icons/credit.gif" alt="credit">
+{#if $isModalOpen}
+    <nav>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div class="backdrop" transition:fade on:click={closeModal}>
+
+        <div class="custModal" on:click={mainBodyClick}>
+            <div class="custModalHeader">
+                <b>Select Transaction Type : Credit/Debit</b>
+            </div>
+            <div class="custModalBody row">
+                    <div class="credit col-md-6">
+                    <a href="/credit">
+                        <img src="/icons/credit.gif" alt="credit">
+                    </a>
+                    </div>
+                <div class="debit col-md-6">
+                    <a href="/debit">
+                    <img src="/icons/debit.gif" alt="debit">
+                </a>
+                </div>
+            </div>
         </div>
-        <div class="debit col-md-6">
-            <img src="/icons/debit.gif" alt="credit">
+
         </div>
-    </div>
+    </nav>
+{/if}
 
-</div>
-
-
-
+ 
 <style>
+
+ 
+.credit img:hover{
+    box-shadow: 6px 6px 16px 1px;
+}
+
+ 
+
+.debit img:hover{
+    box-shadow: 6px 6px 16px 1px;
+}
+
+ 
 
 .custModal{
 
-    z-index: 1000;
+    z-index: 99999;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
     margin: auto;
     width: 400px;
-    height: 30%;
-    border: 2px solid black;
+    height: 40%;
     box-shadow: 0px 0px 25px 2px;
+    border: 10px;
 }
 
+ 
+
 .custModalHeader{
-    height: 20px;
-    width: 100%;
+    display: grid;
+    height: 50px;
     background-color: rgba(46, 160, 217, 0.727);
     border-bottom-left-radius: 15%;
     border-bottom-right-radius: 15%;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
-.debit{
-    width: 50%;
+ 
+
+.custModalBody {
+    padding: 10px 20px;
 }
+
+ 
 
 .credit img{
     width: 100%;
     height: auto;
-    border: 2px solid black;
+    outline: 1px solid black;
     border-radius: 10%;
-
+ 
 }
 
-.credit{
-    width: 50%;
-}
+ 
 
 .debit img{
     width: 100%;
     height: auto;
-    border: 2px solid black;
+    outline: 1px solid black;
     border-radius: 10%;
-
 }
 
+ 
+
+.backdrop {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background-color: rgba(255,255,255,0.9);
+}
 
 </style>
+

@@ -1,23 +1,17 @@
 <script>
-
+import  { isModalOpen } from '../store/modal-store';
 export let amount,imgUrl;
 
 function startTransaction(){
-  document.querySelector('.custModal').classList.remove('d-none');
+  $isModalOpen = true;
 }
 
-document.addEventListener('click',function(e){
-
-let modal = document.querySelector('.custModal');
-console.log(e.);
-
-
-});
 
 </script>
 
 
 <div class="card" style="width: 13rem;">
+    <!-- svelte-ignore a11y-img-redundant-alt -->
     <img class="card-img-top" src={imgUrl} alt="Card image cap" />
     <div class="card-body">
       <h5 class="card-title">CASH</h5>
