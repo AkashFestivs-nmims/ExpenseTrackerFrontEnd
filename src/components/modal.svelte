@@ -6,7 +6,10 @@ import { fade } from 'svelte/transition';
  
 
     function closeModal(e) {
-        isModalOpen.set(!isModalOpen)
+        isModalOpen.update((data) => {
+           data.isOpen = !$isModalOpen.isOpen
+           return data;
+        })
     }
 
  
@@ -17,26 +20,17 @@ import { fade } from 'svelte/transition';
 
 </script>
 
-{#if $isModalOpen}
+{#if $isModalOpen.isOpen}
     <nav>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div class="backdrop" transition:fade on:click={closeModal}>
 
         <div class="custModal" on:click={mainBodyClick}>
             <div class="custModalHeader">
-                <b>Select Transaction Type : Credit/Debit</b>
+                <b>{$isModalOpen.header}</b>
             </div>
             <div class="custModalBody row">
-                    <div class="credit col-md-6">
-                    <a href="/credit">
-                        <img src="/icons/credit.gif" alt="credit">
-                    </a>
-                    </div>
-                <div class="debit col-md-6">
-                    <a href="/debit">
-                    <img src="/icons/debit.gif" alt="debit">
-                </a>
-                </div>
+                   {@html $isModalOpen.body}
             </div>
         </div>
 
@@ -65,10 +59,11 @@ import { fade } from 'svelte/transition';
     z-index: 99999;
     position: absolute;
     margin: auto;
-    width: 400px;
-    height: 40%;
+    width: 35%;
+    min-height: 40%;
     box-shadow: 0px 0px 25px 2px;
     border: 10px;
+    text-align: center;
 }
 
  
@@ -93,8 +88,8 @@ import { fade } from 'svelte/transition';
  
 
 .credit img{
-    width: 100%;
-    height: auto;
+    width: 80%;
+    height: 80%;
     outline: 1px solid black;
     border-radius: 10%;
  
@@ -103,8 +98,8 @@ import { fade } from 'svelte/transition';
  
 
 .debit img{
-    width: 100%;
-    height: auto;
+    width: 80%;
+    height: 80%;
     outline: 1px solid black;
     border-radius: 10%;
 }
