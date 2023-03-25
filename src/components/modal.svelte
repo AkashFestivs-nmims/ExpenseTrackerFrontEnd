@@ -41,19 +41,6 @@ import { fade } from 'svelte/transition';
  
 <style>
 
- 
-.credit img:hover{
-    box-shadow: 6px 6px 16px 1px;
-}
-
- 
-
-.debit img:hover{
-    box-shadow: 6px 6px 16px 1px;
-}
-
- 
-
 .custModal{
 
     z-index: 99999;
@@ -84,27 +71,6 @@ import { fade } from 'svelte/transition';
 .custModalBody {
     padding: 10px 20px;
 }
-
- 
-
-.credit img{
-    width: 80%;
-    height: 80%;
-    outline: 1px solid black;
-    border-radius: 10%;
- 
-}
-
- 
-
-.debit img{
-    width: 80%;
-    height: 80%;
-    outline: 1px solid black;
-    border-radius: 10%;
-}
-
- 
 
 .backdrop {
     position: fixed;
