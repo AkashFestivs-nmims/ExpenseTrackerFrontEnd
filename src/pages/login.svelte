@@ -22,8 +22,9 @@
                 <a href="/dashboard"> <button class="form-control btn btn-info">Login</button></a>
             </div>
         </div>
-        <div class="formTableFooter">
-
+        <div class="formTableFooter container" >
+            <p><b>&#9993; Email : </b>expenseTracker@gmail.com</p>
+            <p><b>&#9742; Phone : </b>9876543210</p>
         </div>
 
     </div>
