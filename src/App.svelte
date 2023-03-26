@@ -1,4 +1,5 @@
 <script>
+	import Login from './pages/login.svelte';
 	import Credit from './pages/credit.svelte';
     import {Router, Route, Link, navigate} from 'svelte-routing';
     import Modal from "./components/modal.svelte";
@@ -18,4 +19,5 @@
         <Route path='/dashboard'><Dashboard /></Route>
         <Route path='/credit'><Credit /></Route>
         <Route path='/debit'><Debit /></Route>
+        <Route path='/login'><Login /></Route>
 </Router>
