@@ -1,7 +1,13 @@
 
 <script>
+// @ts-nocheck
 
-    document.addEventListener('readystatechange',function(){
+    import { onMount } from "svelte";
+
+
+
+   onMount(() => {
+
     
     
         var ctx = document.getElementById('myChart1');
@@ -36,14 +42,15 @@ const config = {
     
       
             new Chart(ctx, config);
-    });
+        })
+
     
     
     
       </script>
     
     
-        <div class="card text-dark bg-light mb-3" style="max-width: 16rem;">
+        <div class="card text-dark bg-light mb-3" style="max-width: 26rem;">
             <div class="card-header bg-info">Expense Chart</div>
             <div class="card-body">
                 <canvas id="myChart1"></canvas>

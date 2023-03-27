@@ -39,7 +39,7 @@ document.addEventListener('readystatechange',function(){
   </script>
 
 
-    <div class="card text-dark bg-light mb-3" style="max-width: 16rem;">
+    <div class="card text-dark bg-light mb-3" style="max-width: 26rem;">
         <div class="card-header bg-info">Expense Chart</div>
         <div class="card-body">
             <canvas id="myChart"></canvas>

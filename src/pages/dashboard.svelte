@@ -31,9 +31,9 @@ let objArray = [{'amount':'1000' , 'imgUrl': '/icons/blue1.jpg','accountType':'C
 
     <div id="dashboardBody">
         <div class="row d-flex justify-content-evenly" style="">
-            <div class="col-md-3"><Graph /></div>
-            <div class="col-md-3"><DashboardGraph /></div>
-            <div class="col-md-5"><List /></div>      
+            <div class="col-md-4"><Graph /></div>
+            <div class="col-md-4"><DashboardGraph /></div>
+            <div class="col-md-4"><List /></div>      
         </div>
     </div>
 

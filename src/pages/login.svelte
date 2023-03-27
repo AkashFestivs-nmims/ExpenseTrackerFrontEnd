@@ -56,7 +56,7 @@ main{
 .formTab{
 
     margin-top: 15%;
-    width: 80%;
+    width: 70%;
     height: 80%;
     border: 1px solid black;
     border-radius: 10%;
