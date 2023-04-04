@@ -2,8 +2,11 @@
     import Header3 from "../components/header3.svelte";
     import ListTransactionCard from "../components/listTransactionCard.svelte";
     import PaymentCard from "../components/paymentCard.svelte";
-import SideBar from "../components/sideBar.svelte";
+    import SideBar from "../components/sideBar.svelte";
     import TheamGraph1 from "../components/theamGraph1.svelte";
+
+
+    
 
 
 </script>
@@ -28,11 +31,12 @@ import SideBar from "../components/sideBar.svelte";
 
 main{
 
-    min-width: calc(100%-350px);
+    min-width: calc(100% - var(--sideBarWidth));
     margin-top: 8vh;
-    margin-left: 350px;
+    margin-left: var(--sideBarWidth);
     min-height: 92vh;
     padding: 30px;
+    transition: ease-in-out 1s;
 }
 
 </style>

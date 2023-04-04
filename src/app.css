@@ -7,3 +7,12 @@
 body{
     background-color: #B5C2C9;
 }
+
+:root{
+
+    --sideBarWidth : 350px;
+    --sideBarInOut : 0px;
+
+    /* --sideBarWidth : 0px;
+    --sideBarInOut : -350px; */
+}
