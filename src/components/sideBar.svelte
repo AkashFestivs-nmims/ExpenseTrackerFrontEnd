@@ -36,6 +36,8 @@ let obj = [{'logo':'&#9739;','name':'Dashboard'}]
     height: 100vh;
     width: 350px;
     background-color: #F1F3F4;
+    margin-left: var(--sideBarInOut);
+    transition: ease-in-out 1s;
 }
 
 .sideBarLogo{
@@ -49,9 +51,6 @@ let obj = [{'logo':'&#9739;','name':'Dashboard'}]
     border-radius: 50%;
 }
 
-.sideBarBody{
-
-}
 
 li{
     list-style: none;
