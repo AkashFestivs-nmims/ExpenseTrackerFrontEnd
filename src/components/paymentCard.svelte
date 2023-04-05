@@ -4,10 +4,10 @@
 
 <div class="paymentCard">
         <div class="paymentCircle">
-            <img src="icons\logo\electricity.jpg" alt="" />
+            <img src="icons\logo\electrictower.png" alt="" />
         </div>
         <div class="paymentCircle">
-            <img src="icons\logo\mobileRecgarge.jpg" alt="" />
+            <img src="icons\logo\payment.png" alt="" />
         </div>
         <div class="paymentCircle">
             <img src="icons\logo\gas.jpg" alt="" />

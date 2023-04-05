@@ -1,6 +1,6 @@
 <script>
 
-let obj = [{'logo':'&#9739;','name':'Dashboard'}]
+let obj = [{'logo':'/svg/home.svg;','name':'Dashboard'}]
 
 </script>
 
@@ -12,12 +12,14 @@ let obj = [{'logo':'&#9739;','name':'Dashboard'}]
     </div>
     <div class="sideBarBody">
         <ul>
+            {#each obj as obj}
             <li>
                <div class="div">
-                <object data="/svg/home.svg" title="Dashboard" class="w-6 h-6"></object>
+                <object data={obj.logo} title="Dashboard" class="w-6 h-6"></object>
               </div>
-               <div class="div">Dashboard</div>
+               <div class="div">{obj.name}</div>
             </li>
+            {/each}
         </ul>
     </div>
 
@@ -37,7 +39,7 @@ let obj = [{'logo':'&#9739;','name':'Dashboard'}]
     width: 350px;
     background-color: #F1F3F4;
     margin-left: var(--sideBarInOut);
-    transition: ease-in-out 1s;
+    transition: ease-in-out 0.5s;
 }
 
 .sideBarLogo{

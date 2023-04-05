@@ -36,7 +36,7 @@ main{
     margin-left: var(--sideBarWidth);
     min-height: 92vh;
     padding: 30px;
-    transition: ease-in-out 1s;
+    transition: ease-in-out 0.5s;
 }
 
 </style>
