@@ -17,13 +17,13 @@
 <main>
     <PaymentCard />
     <ListTransactionCard />
-    <section class="d-flex">
-        <div class="col-md-6 col-sm-12 d-flex justify-content-start">
-            <TheamGraph1 />
-        </div>
-        <div class="col-md-6 col-sm-12 d-flex justify-content-end">
-            <TheamGraph1 />
-        </div>
+    <section class="d-flex row">
+            <div class="col-md-6 col-sm-12 d-flex justify-content-start">
+                <TheamGraph1 chartName=donutchart/>
+            </div>
+            <div class="col-md-6 col-sm-12 d-flex justify-content-end">
+                <TheamGraph1 chartName=chart_div/>
+            </div>
     </section>
 </main>
 
