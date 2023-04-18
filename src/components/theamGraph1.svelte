@@ -21,7 +21,7 @@ google.charts.load("current", {packages:["corechart"]});
           title: 'My Daily Activities',
           pieHole: 0.2,
           legend:{position : 'right'},
-          width:500,
+          width:770,
           height:350
         };
 
@@ -53,7 +53,7 @@ google.charts.load("current", {packages:["corechart"]});
             fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
             risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
           },
-          width:500,
+          width:770,
           height:350
         };
 
@@ -71,7 +71,7 @@ google.charts.load("current", {packages:["corechart"]});
 
 <style>
 
-.theamGraph1{
+/* .theamGraph1{
     width: 95%;
     margin-top: 20px;
     height: 350px;
@@ -80,6 +80,15 @@ google.charts.load("current", {packages:["corechart"]});
     display: grid;
     justify-content: center;
     align-items: center;
+} */
+
+:global(svg){
+    width: 95%;
+    margin-top: 20px;
+    height: 350px;
+    background-color: #FFFFFF;
+    border-radius: 20px;
 }
+
 
 </style>

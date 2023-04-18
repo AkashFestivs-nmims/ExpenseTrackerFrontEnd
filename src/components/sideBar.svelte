@@ -1,6 +1,7 @@
 <script>
 
-let obj = [{'logo':'/svg/home.svg;','name':'Dashboard'}]
+let obj = [{'logo':'/svg/home.svg','name':'Dashboard'},{'logo':'/svg/chat.svg','name':'Chat'},{'logo':'/svg/bell.svg','name':'Notification'},
+            {'logo':'/svg/work.svg','name':'Service'}]
 
 </script>
 
@@ -11,16 +12,26 @@ let obj = [{'logo':'/svg/home.svg;','name':'Dashboard'}]
         -------------------------------------------
     </div>
     <div class="sideBarBody">
-        <ul>
-            {#each obj as obj}
-            <li>
-               <div class="div">
-                <object data={obj.logo} title="Dashboard" class="w-6 h-6"></object>
-              </div>
-               <div class="div">{obj.name}</div>
-            </li>
-            {/each}
-        </ul>
+        <div class="div">
+            <ul>
+                {#each obj as obj}
+                <li>
+                <div class="div">
+                    <object data={obj.logo} title="Dashboard" class="w-6 h-6"></object>
+                </div>
+                <div class="div">{obj.name}</div>
+                </li>
+                {/each}
+            </ul>
+        </div>
+        <div class="div d-flex justify-content-center align-item-center">
+            <div class="text-center">
+                    <div class="d-flex justify-content-center" >
+                        <div id="userpic"></div>
+                    </div>
+                <h4 style="margin-top: 10px;">Akshay Kumar</h4>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -71,7 +82,12 @@ li:hover{
     border-radius: 20px;
 }
 
-
+.sideBarBody{
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
 ul{
     padding: 0;
@@ -83,5 +99,22 @@ ul{
 }
 .h-6{
     height: 26px;
+}
+
+#userpic{
+    width: 75px;
+    height: 75px;
+    border-radius: 100px;
+    box-shadow: 0px 0px 15px 1px;
+    overflow: hidden;
+    background-image: url('/icons/pyselaya.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#userpic:hover{
+    transform: rotate(360deg);
+    transition: ease-in-out 0.5s;
 }
 </style>

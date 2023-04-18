@@ -17,11 +17,11 @@
 <main>
     <PaymentCard />
     <ListTransactionCard />
-    <section class="d-flex row">
-            <div class="col-md-6 col-sm-12 d-flex justify-content-start">
+    <section>
+            <div class="">
                 <TheamGraph1 chartName=donutchart/>
             </div>
-            <div class="col-md-6 col-sm-12 d-flex justify-content-end">
+            <div class="">
                 <TheamGraph1 chartName=chart_div/>
             </div>
     </section>
@@ -37,6 +37,13 @@ main{
     min-height: 92vh;
     padding: 30px;
     transition: ease-in-out 0.5s;
+}
+
+section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
 }
 
 </style>
