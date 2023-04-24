@@ -1,17 +1,19 @@
 <script>
+    import { each } from "svelte/internal";
+
+
+let paymentViewObj = [{'name':'Electcicity','icon':'icons/logo/electricity.jpg'},{'name':'MobileRecharge','icon':'icons/logo/mobileRecgarge.jpg'},
+                    {'name':'Gas','icon':'icons/logo/gas.jpg'}]
+
 
 </script>
 
 <div class="paymentCard">
+    {#each paymentViewObj as obj}
         <div class="paymentCircle">
-            <img src="icons\logo\electricity.jpg" alt="" />
+            <img src={obj.icon} alt={obj.name} />
         </div>
-        <div class="paymentCircle">
-            <img src="icons\logo\mobileRecgarge.jpg" alt="" />
-        </div>
-        <div class="paymentCircle">
-            <img src="icons\logo\gas.jpg" alt="" />
-        </div>
+    {/each}
 </div>
 
 

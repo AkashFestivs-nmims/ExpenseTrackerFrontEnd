@@ -8,6 +8,7 @@
     import Debit from './pages/debit.svelte';
     import SideBar from './components/sideBar.svelte';
     import TheamDashboad from './pages/theamDashboad.svelte';
+    import FullTransactionList from './pages/fullTransactionList.svelte';
 
 
 </script>
@@ -23,4 +24,5 @@
         <Route path='/credit'><Credit /></Route>
         <Route path='/debit'><Debit /></Route>
         <Route path='/login'><Login /></Route>
+        <Route path='/fullTransactionList'><FullTransactionList /> </Route>
 </Router>

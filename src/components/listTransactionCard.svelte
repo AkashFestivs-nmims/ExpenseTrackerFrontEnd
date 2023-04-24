@@ -1,8 +1,26 @@
 <script>
+    import { onMount } from "svelte";
 
-let completed = '#00FA9A';
-let failed = '#F08080';
-let pending = '#FAFAD2';
+
+let styleObj = {'COMPLETED' :{'color' : '#00FA9A','icon' : '&#128338;'},'FAILED' :{'color' : '#F08080','icon' : '&#128338;'},
+                'PENDING' :{'color' : '#FAFAD2','icon' : '&#128338;'}}
+
+let transactionObj = {
+    'transactionList' : [{'accountType' : 'CASH' ,'ammount' : '500' , 'status' : 'COMPLETED' , 'time' : '23 Feb 2023 17:45:31'},
+                         {'accountType' : 'SAVING' ,'ammount' : '200' , 'status' : 'FAILED' , 'time' : '24 Feb 2023 17:45:31'},
+                         {'accountType' : 'STOCK MARKET' ,'ammount' : '700' , 'status' : 'COMPLETED' , 'time' : '20 Feb 2023 17:45:31'},
+                         {'accountType' : 'MUTUAL FUND' ,'ammount' : '5000' , 'status' : 'PENDING' , 'time' : '25 Feb 2023 17:45:31'}],
+    'completedCount' : 2,
+    'failedCount' : 1,
+    'pendingCount' : 1
+    }
+let totalTransaction = transactionObj.completedCount + transactionObj.failedCount + transactionObj.pendingCount;
+
+onMount(() =>{
+    document.querySelector('#fullListButton').addEventListener('click',function(){
+        document.location.href = '/fullTransactionList';
+    })
+})
 
 </script>
 
@@ -13,14 +31,14 @@ let pending = '#FAFAD2';
                 <b>Transaction List</b>
             </div>
             <div class="col-md-6" style="gap: 50px; display: flex; justify-content: end;">
-                <b>75</b>
-                <b>15</b>
-                <b>7</b>
+                <b>{transactionObj.completedCount}</b>
+                <b>{transactionObj.failedCount}</b>
+                <b>{transactionObj.pendingCount}</b>
             </div>
         </div>
         <div class="row" style="padding: 20px; height: 30px; font-size: 10px; border-radius: 30px;">
             <div class="col-md-6" style="height: 100%; display: flex;justify-content: start; align-items: end;">
-                <b>Total Transaction : 225</b>
+                <b>Total Transaction : {totalTransaction}</b>
             </div>
             <div class="col-md-6"  style="height: 100%; display: flex;justify-content: end; align-items: end; gap:27px">
                 <b>Colmpeted</b>
@@ -40,24 +58,17 @@ let pending = '#FAFAD2';
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>CASH</td>
-                    <td>400 &#x20b9;</td>
-                    <td><i style="background-color: {completed};" > &#128338;  COMPLETED </i></td>
-                    <td>23 Feb 2023 17:45:31</td>
-                </tr>
-                <tr>
-                    <td>CASH</td>
-                    <td>400 &#x20b9;</td>
-                    <td><i style="background-color: {failed};" > &#128338;  FAILED</i></td>
-                    <td>23 Feb 2023 17:45:31</td>
-                </tr>
-                <tr>
-                    <td>CASH</td>
-                    <td>400 &#x20b9;</td>
-                    <td><i style="background-color: {pending};" > &#128338;  PENDING </i></td>
-                    <td>23 Feb 2023 17:45:31</td>
-                </tr>
+                {#each transactionObj.transactionList as obj}
+                    <tr>
+                        <td>{obj.accountType}</td>
+                        <td>{obj.ammount} &#x20b9;</td>
+                        <td><i style="background-color: {styleObj[obj.status].color};" >{@html styleObj[obj.status].icon}  {obj.status} </i></td>
+                        <td>{obj.time}</td>
+                    </tr>
+                {/each}
+                    <tr style="cursor: pointer;" id="fullListButton">
+                        <td colspan="4" ><object data="/svg/downArrow.svg" title="Transaction List" class="w-6 h-6"></object>Full Transaction List</td>
+                    </tr>
             </tbody>
         </table>
     </div>
@@ -90,6 +101,19 @@ i{
     font-family: unset;
     text-align: center;
 
+}
+
+#viewTransactionList{
+    width: 25%;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.w-6{
+    width: 32px;
+}
+.h-6{
+    height: 26px;
 }
 
 </style>

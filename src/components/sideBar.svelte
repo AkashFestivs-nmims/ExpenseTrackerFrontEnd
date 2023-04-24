@@ -105,16 +105,12 @@ ul{
     width: 75px;
     height: 75px;
     border-radius: 100px;
-    box-shadow: 0px 0px 15px 1px;
+    box-shadow: 0px 0px 10px 1px;
     overflow: hidden;
-    background-image: url('/icons/pyselaya.jpg');
+    background-image: url('/icons/profilPic.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 
-#userpic:hover{
-    transform: rotate(360deg);
-    transition: ease-in-out 0.5s;
-}
 </style>
