@@ -4,6 +4,8 @@
     import PaymentCard from "../components/paymentCard.svelte";
     import SideBar from "../components/sideBar.svelte";
     import TheamGraph1 from "../components/theamGraph1.svelte";
+    import TheamModal from "../components/theamModal.svelte";
+    import { isTeamModalopen } from "../store/theamModalStore";
 
 
     
@@ -14,7 +16,11 @@
 <SideBar />
 <Header3 />
 
+
 <main>
+    {#if $isTeamModalopen.isOpen}
+         <TheamModal />
+    {/if}
     <PaymentCard />
     <ListTransactionCard />
     <section>

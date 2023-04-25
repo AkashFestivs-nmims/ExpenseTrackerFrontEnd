@@ -1,18 +1,27 @@
 <script>
     import { each } from "svelte/internal";
+    import { isTeamModalopen } from "../store/theamModalStore";
 
 
 let paymentViewObj = [{'name':'Electcicity','icon':'icons/logo/electricity.jpg'},{'name':'MobileRecharge','icon':'icons/logo/mobileRecgarge.jpg'},
                     {'name':'Gas','icon':'icons/logo/gas.jpg'}]
 
 
+function handleClick(type,icon){
+    isTeamModalopen.set({
+        isOpen : true,
+        icon:icon,
+        type:type
+    })
+}
 </script>
 
 <div class="paymentCard">
     {#each paymentViewObj as obj}
-        <div class="paymentCircle">
-            <img src={obj.icon} alt={obj.name} />
-        </div>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <div class="paymentCircle" on:click={() => handleClick(obj.name,obj.icon)}>
+                <img src={obj.icon} alt={obj.name} />
+            </div>
     {/each}
 </div>
 

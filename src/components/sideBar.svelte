@@ -1,8 +1,17 @@
 <script>
+    import { onMount } from "svelte";
 
-let obj = [{'logo':'/svg/home.svg','name':'Dashboard'},{'logo':'/svg/chat.svg','name':'Chat'},{'logo':'/svg/bell.svg','name':'Notification'},
+
+
+let obj = [{'logo':'/svg/home.svg','name':'Dashboard','link':'/theamDashboard'},{'logo':'/svg/list.svg','name':'Transaction List','link':'/fullTransactionList'}
+        ,{'logo':'/svg/chat.svg','name':'Chat'},{'logo':'/svg/bell.svg','name':'Notification'},
             {'logo':'/svg/work.svg','name':'Service'}]
 
+let currentUrl = '';
+
+onMount(() => {
+  currentUrl = window.location.href;
+});
 </script>
 
 <div class="sideBar">
@@ -15,11 +24,13 @@ let obj = [{'logo':'/svg/home.svg','name':'Dashboard'},{'logo':'/svg/chat.svg','
         <div class="div">
             <ul>
                 {#each obj as obj}
-                <li>
-                <div class="div">
-                    <object data={obj.logo} title="Dashboard" class="w-6 h-6"></object>
-                </div>
-                <div class="div">{obj.name}</div>
+                <li class:active={currentUrl.includes(obj.link)}> 
+                    <a href={obj.link}>
+                        <div class="div">
+                            <object data={obj.logo} title="Dashboard" class="w-6 h-6"></object>
+                        </div>
+                        <div class="div">{obj.name}</div>
+                    </a>
                 </li>
                 {/each}
             </ul>
@@ -65,7 +76,7 @@ let obj = [{'logo':'/svg/home.svg','name':'Dashboard'},{'logo':'/svg/chat.svg','
 }
 
 
-li{
+li a{
     list-style: none;
     padding: 10px;
     font-size: 18px;
@@ -73,10 +84,11 @@ li{
     gap: 20px;
     font-weight: 700;
     align-items: center;
-
+    text-decoration: none;
+    color: black;
 }
 
-li:hover{
+li a:hover{
     background-color: #8EB6DC;
     color: white;
     border-radius: 20px;
@@ -113,4 +125,9 @@ ul{
     background-size: cover;
 }
 
+li.active{
+    background-color: #8EB6DC;
+    color: white;
+    border-radius: 20px;
+}
 </style>

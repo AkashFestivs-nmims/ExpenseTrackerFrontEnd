@@ -27,8 +27,8 @@
         </div>
         <input type="text"  class="form-control"/>
     </div>
-    <div class="col-md-8">
-        
+    <div class="col-md-8 headerLeft">
+        <div class="profilSettings"></div>
     </div>
 </div>
 
@@ -72,6 +72,31 @@
 }
 .h-6{
     height: 26px;
+}
+
+.headerLeft{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.profilSettings{
+    width: 73px;
+    height: 73px;
+    border-radius: 100px;
+    overflow: hidden;
+    background-image: url('/icons/profilPic.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-right: 15px;
+    border: 1px solid black;
+}
+
+.profilSettings:hover{
+    width: 75px;
+    height: 75px;
+    transition: ease-in-out 0.1s;
 }
 
 
