@@ -1,4 +1,7 @@
 <script>
+    import { isProfilClick } from "../store/profileUpdate";
+    import ProfilDropDown from "./profilDropDown.svelte";
+
 
 
     let sideBarOpen = true;
@@ -15,7 +18,9 @@
     }
 
 </script>
-
+{#if $isProfilClick.isOpen}
+     <ProfilDropDown />
+{/if}
 
 <div class="header">
 
@@ -28,7 +33,8 @@
         <input type="text"  class="form-control"/>
     </div>
     <div class="col-md-8 headerLeft">
-        <div class="profilSettings"></div>
+        <div class="profilSettings"  on:click={() => $isProfilClick.isOpen = !$isProfilClick.isOpen}></div>
+        <div class="profileSettingDropDown"></div>
     </div>
 </div>
 
@@ -99,5 +105,11 @@
     transition: ease-in-out 0.1s;
 }
 
+.w-6{
+    width: 5px;
+}
+.h-6{
+    height: 5px;
+}
 
 </style>

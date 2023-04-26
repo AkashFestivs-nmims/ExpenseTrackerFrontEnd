@@ -34,3 +34,10 @@ body{
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #696969;
 }
+
+.w-6{
+    width: 32px;
+}
+.h-6{
+    height: 26px;
+}

@@ -1,5 +1,4 @@
 <script>
-    import { each } from "svelte/internal";
     import { isTeamModalopen } from "../store/theamModalStore";
 
 
