@@ -28,7 +28,7 @@
     <div class="col-md-4 headerRight">
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div class="float-left" on:click={sideBarClick}>
-            <object data="/svg/sidebarOpenClose.svg" title="sideBarButton" class="w-6 h-6"></object>
+            <object data="/svg/sidebarOpenClose.svg" title="sideBarButton" style="width: 25px; height: 25px;"></object>
         </div>
         <input type="text"  class="form-control"/>
     </div>

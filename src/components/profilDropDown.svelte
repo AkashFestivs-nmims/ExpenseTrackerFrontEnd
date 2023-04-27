@@ -2,7 +2,7 @@
 import { fade, blur, fly, slide, scale } from "svelte/transition";
 import {isProfilClick} from "../store/profileUpdate"
 import { backInOut, bounceInOut, circInOut, cubicInOut, quadInOut, sineOut } from 'svelte/easing'
-let range = '80%';
+let range = '70%';
 
 function closeDropDown(e) {
     isProfilClick.update((data) => {
@@ -11,7 +11,9 @@ function closeDropDown(e) {
     })
 }
 
-let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profil','link':'','name':'Profil'}]
+let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profile','link':'/updateProfile','name':'Profile'},
+                {'icon':'/svg/creditCard.svg','title':'Bank','link':'','name':'Bank Account'},
+                {'icon':'/svg/group.svg','title':'Group','link':'','name':'My Peoples'}]
 
 </script>
 
@@ -38,18 +40,14 @@ let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profil','link':'','name':'
             <b>{range.split('%')[0]} </b>
             <div class="progressBar" style="--range:{range}"></div>
         </div>
-        <div class="dropDownBtn">
-            <object data="/svg/profil.svg" title="Profil" style="width: 40px; height: 40px;"></object>
-            <b>Profile</b>
-        </div>
-        <div class="dropDownBtn">
-            <object data="/svg/creditCard.svg" title="bank" style="width: 40px; height: 40px;"></object>
-            <b>Bank Account</b>
-        </div>
-        <div class="dropDownBtn">
-            <object data="/svg/group.svg" title="Group" style="width: 40px; height: 40px;"></object>
-            <b>My Peoples</b>
-        </div>
+        {#each profilUpdate as obj}
+            <a href={obj.link}>
+                <div class="dropDownBtn">
+                    <object data={obj.icon} title={obj.title} style="width: 40px; height: 40px;"></object>
+                    <b>{obj.name}</b>
+                </div>
+            </a>
+        {/each}
     </div>
     <hr>
     <div>
@@ -139,13 +137,18 @@ main{
 }
 
 .dropDownBtn:hover{
-    box-shadow: 0px 0px 5px 1px;
+    box-shadow: 0px 0px 3px 1px;
     border-radius: 10px;
 }
 
 .dropDownContents{
     height: 210px;
     overflow-y: scroll;
+}
+
+a{
+    text-decoration: none;
+    color: black;
 }
 
 </style>

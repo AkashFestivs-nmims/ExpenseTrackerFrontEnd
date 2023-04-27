@@ -1,4 +1,5 @@
 <script>
+	import UpdateProfile from './pages/updateProfile.svelte';
 	import Header3 from './components/header3.svelte';
 	import Login from './pages/login.svelte';
 	import Credit from './pages/credit.svelte';
@@ -24,5 +25,6 @@
         <Route path='/credit'><Credit /></Route>
         <Route path='/debit'><Debit /></Route>
         <Route path='/login'><Login /></Route>
+        <Route path='/updateProfile'><UpdateProfile /> </Route>
         <Route path='/fullTransactionList'><FullTransactionList /> </Route>
 </Router>
