@@ -1,12 +1,18 @@
 <script>
-    import { onMount } from "svelte";
+// @ts-nocheck
+
+import { onMount } from "svelte";
+import { Router, Link } from 'svelte-routing';
+import { user } from './../store/user-store.js';
+import {fetchDynamic} from "../Script/Script";
+
+let dashboardCompObj = '';
 
 
-
-let obj = [{'logo':'/svg/home.svg','name':'Dashboard','link':'/theamDashboard'},{'logo':'/svg/list.svg','name':'Transaction List','link':'/fullTransactionList'}
-        ,{'logo':'/svg/chat.svg','name':'Chat'},{'logo':'/svg/bell.svg','name':'Notification'},
-            {'logo':'/svg/work.svg','name':'Service'}]
-
+onMount(async() =>{
+    let sendObj = await {'role' : $user.role};
+    dashboardCompObj = await fetchDynamic('/get-dashboard-comp','POST',sendObj);
+})
 let currentUrl = '';
 
 onMount(() => {
@@ -23,14 +29,14 @@ onMount(() => {
     <div class="sideBarBody">
         <div class="div">
             <ul>
-                {#each obj as obj}
+                {#each dashboardCompObj as obj}
                 <li class:active={currentUrl.includes(obj.link)}> 
-                    <a href={obj.link}>
+                    <Link to={obj.link} class="link">
                         <div class="div">
-                            <object data={obj.logo} title="Dashboard" class="w-6 h-6"></object>
+                            <object data={obj.menu_icon} title="Dashboard" class="w-6 h-6"></object>
                         </div>
-                        <div class="div">{obj.name}</div>
-                    </a>
+                        <div class="div">{obj.menu}</div>
+                    </Link>
                 </li>
                 {/each}
             </ul>
@@ -40,7 +46,7 @@ onMount(() => {
                     <div class="d-flex justify-content-center" >
                         <div id="userpic"></div>
                     </div>
-                <h4 style="margin-top: 10px;">Akshay Kumar</h4>
+                <h4 style="margin-top: 10px;">{$user.firstname + " " + $user.lastname}</h4>
             </div>
         </div>
     </div>
@@ -76,7 +82,8 @@ onMount(() => {
 }
 
 
-li a{
+:global(li .link){
+
     list-style: none;
     padding: 10px;
     font-size: 18px;
@@ -88,12 +95,11 @@ li a{
     color: black;
 }
 
-li a:hover{
+:global(li .link):hover{
     background-color: #8EB6DC;
     color: white;
     border-radius: 20px;
 }
-
 .sideBarBody{
     height: 80vh;
     display: flex;
@@ -119,7 +125,7 @@ ul{
     border-radius: 100px;
     box-shadow: 0px 0px 10px 1px;
     overflow: hidden;
-    background-image: url('/icons/profilPic.jpg');
+    background-image: var(--profilUrl);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

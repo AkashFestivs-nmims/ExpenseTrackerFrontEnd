@@ -1,8 +1,10 @@
 <script>
 import { fade, blur, fly, slide, scale } from "svelte/transition";
+import { user } from './../store/user-store.js';
+import { Router, Link } from 'svelte-routing';
 import {isProfilClick} from "../store/profileUpdate"
 import { backInOut, bounceInOut, circInOut, cubicInOut, quadInOut, sineOut } from 'svelte/easing'
-let range = '70%';
+let range = '60%';
 
 function closeDropDown(e) {
     isProfilClick.update((data) => {
@@ -10,6 +12,7 @@ function closeDropDown(e) {
        return data;
     })
 }
+
 
 let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profile','link':'/updateProfile','name':'Profile'},
                 {'icon':'/svg/creditCard.svg','title':'Bank','link':'','name':'Bank Account'},
@@ -24,13 +27,13 @@ let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profile','link':'/updatePr
     <div class="profilDeatils">
         <div class="profilPic"></div>
         <div class="profilDetails">
-            <h3>Akshay kumar</h3>
+            <h3>{$user.firstname + ' ' + $user.lastname}</h3>
                 <div>
-                    <b style="color: red; border: 1px solid red; border-radius: 5px; padding: 1px;">ADMIN</b>
+                    <b style="color: red; border: 1px solid red; border-radius: 5px; padding: 1px;">{$user.role}</b>
                 </div>
                 <div style="display: grid; justify-items: start; padding: 2px;">
-                    <small><object data="/svg/mail.svg" title="Mail" style="width: 21px; height: 21px;"></object> akshayKunar@gmail.com</small>
-                    <small><object data="/svg/location.svg" title="Location" style="width: 21px; height: 21px;"></object> My new villa,Bandra</small>
+                    <small><object data="/svg/mail.svg" title="Mail" style="width: 21px; height: 21px;"></object> {$user.email}</small>
+                    <small><object data="/svg/location.svg" title="Location" style="width: 21px; height: 21px;"></object> {$user.address}</small>
                 </div>
         </div>
     </div>
@@ -41,12 +44,12 @@ let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profile','link':'/updatePr
             <div class="progressBar" style="--range:{range}"></div>
         </div>
         {#each profilUpdate as obj}
-            <a href={obj.link}>
+            <Link to={obj.link} class="link">
                 <div class="dropDownBtn">
                     <object data={obj.icon} title={obj.title} style="width: 40px; height: 40px;"></object>
                     <b>{obj.name}</b>
                 </div>
-            </a>
+            </Link>
         {/each}
     </div>
     <hr>
@@ -105,7 +108,7 @@ main{
     height: 90px;
     border-radius: 50%;
     border: 1px solid black;
-    background-image: url('/icons/profilPic.jpg');
+    background-image: var(--profilUrl);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -144,11 +147,6 @@ main{
 .dropDownContents{
     height: 210px;
     overflow-y: scroll;
-}
-
-a{
-    text-decoration: none;
-    color: black;
 }
 
 </style>

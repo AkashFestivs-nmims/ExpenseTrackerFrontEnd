@@ -1,8 +1,18 @@
 <script>
+import { user } from './../store/user-store.js';
 import Header3 from "../components/header3.svelte";
 import SideBar from "../components/sideBar.svelte";
+import { onMount } from 'svelte';
+import { isProfilClick } from '../store/profileUpdate.js';
 
 let descAttr = true;
+
+onMount(() =>{
+    isProfilClick.update((data) => {
+        data.isOpen = false
+       return data;
+    })
+})
 
 function editbtnclk(e){
     console.log('Update Click')
@@ -17,7 +27,7 @@ function savebtnclk(e){
     document.querySelector('#savePersonalinfo').classList.add('d-none');
     document.querySelector('#editPersonalinfo').classList.remove('d-none');
 }
-
+$: console.log('profilObj',$user)
 
 </script>
 
@@ -33,21 +43,21 @@ function savebtnclk(e){
             <div class="row">
                 <div class="col-md-4">
                     <label for="name"><b>Name :</b></label>
-                    <input type="text" id="name" disabled={descAttr} class="form-control" value="Akshay Kumar"/>
+                    <input type="text" id="name" disabled={descAttr} class="form-control" value={$user.firstname + " " + $user.lastname} />
                 </div>
                 <div class="col-md-4">
                     <label for="phone"><b>Phone Number :</b></label>
-                    <input type="text" id="phone" disabled={descAttr} class="form-control" value="9876543210"/>
+                    <input type="text" id="phone" disabled={descAttr} class="form-control" value={$user.phoneNumber}/>
                 </div>
                 <div class="col-md-4">
                     <label for="email"><b>Email Address :</b></label>
-                    <input type="text" id="email" disabled={descAttr} class="form-control" value="akshayKumar@gmail.com"/>
+                    <input type="text" id="email" disabled={descAttr} class="form-control" value={$user.email}/>
                 </div>
             </div>
             <div class="row" style="margin-top: 10px;">
                 <div class="col-md-7">
                     <label for="address"><b>Address :</b></label>
-                    <input type="text" id="address" class="form-control" disabled={descAttr} style="height: 80px;" value="My new Villa,Bandra">
+                    <input type="text" id="address" class="form-control" disabled={descAttr} style="height: 80px;" value={$user.address}>
                 </div>
                 <div class="col-md-2" style="display: flex; justify-content: end; align-items: center; gap: 15px;">
                     <button id="savePersonalinfo" class="btn btn-primary d-none" on:click={savebtnclk}>Save</button>
@@ -61,7 +71,7 @@ function savebtnclk(e){
             <div class="bioDiv">
                 <h4><b>-- Profile Bio --</b><object data="/svg/edit.svg" title="sideBarButton" style="height: 28px; width: 28px;"></object></h4>
                 <div style="font-size: 20px;font-family: ui-monospace;">
-                    “If you wish to get rich, save what you get. A fool can earn money; but it takes a wise man to save and dispose of it to his own advantage.” – Brigham Young
+                    {$user.userBio}
                 </div>
             </div>
             <hr>
@@ -107,7 +117,7 @@ main{
     height: 180px;
     border-radius: 50%;
     border: 1px solid black;
-    background-image: url('/icons/profilPic.jpg');
+    background-image: var(--profilUrl);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

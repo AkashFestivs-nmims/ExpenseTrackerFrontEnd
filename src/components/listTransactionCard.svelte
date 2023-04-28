@@ -1,5 +1,7 @@
 <script>
     import { onMount } from "svelte";
+    import { Router, Link } from 'svelte-routing';
+    import { HtmlTag } from "svelte/internal";
 
 
 let styleObj = {'COMPLETED' :{'color' : '#00FA9A','icon' : '&#128338;'},'FAILED' :{'color' : '#F08080','icon' : '&#128338;'},
@@ -15,12 +17,6 @@ let transactionObj = {
     'pendingCount' : 1
     }
 let totalTransaction = transactionObj.completedCount + transactionObj.failedCount + transactionObj.pendingCount;
-
-onMount(() =>{
-    document.querySelector('#fullListButton').addEventListener('click',function(){
-        document.location.href = '/fullTransactionList';
-    })
-})
 
 </script>
 
@@ -66,11 +62,13 @@ onMount(() =>{
                         <td>{obj.time}</td>
                     </tr>
                 {/each}
-                    <tr style="cursor: pointer;" id="fullListButton">
-                        <td colspan="4" ><object data="/svg/downArrow.svg" title="Transaction List" class="w-6 h-6"></object>Full Transaction List</td>
-                    </tr>
             </tbody>
         </table>
+        <div class="d-flex justify-content-center">
+            <Link to='/fullTransactionList' class="link">
+                    <div><object data="/svg/downArrow.svg" title="Transaction List" class="w-6 h-6"></object>Full Transaction List</div>
+            </Link>
+        </div>
     </div>
 </div>
 

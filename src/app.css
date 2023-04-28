@@ -12,9 +12,7 @@ body{
 
     --sideBarWidth : 350px;
     --sideBarInOut : 0px;
-
-    /* --sideBarWidth : 0px;
-    --sideBarInOut : -350px; */
+    --profilUrl : '';
 }
 
 
@@ -40,4 +38,10 @@ body{
 }
 .h-6{
     height: 26px;
+}
+
+
+.link{
+    text-decoration: none;
+    color: black;
 }

@@ -91,7 +91,7 @@
     height: 73px;
     border-radius: 100px;
     overflow: hidden;
-    background-image: url('/icons/profilPic.jpg');
+    background-image: var(--profilUrl);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
