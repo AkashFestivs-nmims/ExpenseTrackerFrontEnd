@@ -14,16 +14,16 @@ export const sideBarComp = writable({
 
 const myCookie = getCookie('myCookie');
 let cookie = JSON.parse(myCookie);
-
-
-
+console.log('cookie Data in sideBar : '+cookie);
+if(cookie != null){
     let dashBoardCompObjFromDB =await fetchDynamic('/get-dashboard-comp','POST',cookie)
-
+    
     sideBarComp.update((data) => {
-
+        
         data.dashboardCompObj = dashBoardCompObjFromDB;
         return data;
     });
+}
 
 
 

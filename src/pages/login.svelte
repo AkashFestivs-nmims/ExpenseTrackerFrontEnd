@@ -44,18 +44,18 @@ let password = '';
                 userData.firstname = userinfo.first_name;
                 userData.lastname = userinfo.last_name;
                 userData.email = userinfo.email;
-                userData.phoneNumber = userinfo.phone_number;
+                userData.phoneNumber = userinfo.phone;
                 userData.id = userinfo.user_lid;
                 userData.profilPicUrl = userinfo.profil_pic_url;
-                userData.userBio = userinfo.profil_bio;
+                userData.userBio = userinfo.profile_bio;
                 userData.address = userinfo.address;
-                userData.role = userinfo.name;
-                document.documentElement.style.setProperty("--profilUrl", `url(${userinfo.profil_pic_url})`);
+                userData.role = userinfo.role_name;
+                document.documentElement.style.setProperty("--profilUrl", `url(${userinfo.profile_pic_url})`);
 
                 return userData;
             })
 
-            const cookieValue = {'username' : userinfo.email,'role' : userinfo.name};
+            const cookieValue = {'username' : userinfo.email,'role' : userinfo.role_name};
             const expirationTime = 24 * 60 * 60 * 1000; // 1 day in milliseconds
             const expirationDate = new Date(Date.now() + expirationTime).toUTCString();
             document.cookie = `myCookie=${JSON.stringify(cookieValue)}; expires=${expirationDate}; path=/`;

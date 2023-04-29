@@ -1,9 +1,10 @@
 <script>
 import { fade, blur, fly, slide, scale } from "svelte/transition";
 import { user } from './../store/user-store.js';
-import { Router, Link } from 'svelte-routing';
-import {isProfilClick} from "../store/profileUpdate"
-import { backInOut, bounceInOut, circInOut, cubicInOut, quadInOut, sineOut } from 'svelte/easing'
+import { Router, Link, navigate } from 'svelte-routing';
+import {isProfilClick} from "../store/profileUpdate";
+import { backInOut, bounceInOut, circInOut, cubicInOut, quadInOut, sineOut } from 'svelte/easing';
+import { deleteCookie } from "../Script/Script.js";
 let range = '60%';
 
 function closeDropDown(e) {
@@ -17,6 +18,11 @@ function closeDropDown(e) {
 let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profile','link':'/updateProfile','name':'Profile'},
                 {'icon':'/svg/creditCard.svg','title':'Bank','link':'','name':'Bank Account'},
                 {'icon':'/svg/group.svg','title':'Group','link':'','name':'My Peoples'}]
+
+function logOut(){
+    deleteCookie('myCookie');
+    navigate('/login')
+}
 
 </script>
 
@@ -54,7 +60,7 @@ let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profile','link':'/updatePr
     </div>
     <hr>
     <div>
-        <button class="btn btn-primary"> LogOut</button>
+        <button class="btn btn-primary" on:click={logOut}> LogOut</button>
     </div>
 
 </div>

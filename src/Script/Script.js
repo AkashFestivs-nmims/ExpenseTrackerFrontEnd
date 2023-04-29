@@ -27,12 +27,23 @@ export function fetchDynamic(url, method, data) {
 
 export function getCookie(name) {
     const cookieString = document.cookie;
+    console.log('cookie string:', cookieString);
     const cookies = cookieString.split(';');
+    console.log('cookies:', cookies);
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim();
+      console.log('cookie:', cookie);
       if (cookie.startsWith(name + '=')) {
+        console.log('cookie value:', cookie.substring(name.length + 1, cookie.length));
         return cookie.substring(name.length + 1, cookie.length);
       }
     }
+    console.log('no matching cookie found');
     return null;
-}
+  }
+
+export function deleteCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
+  
+  

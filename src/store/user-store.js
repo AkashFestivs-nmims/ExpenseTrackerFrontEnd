@@ -18,23 +18,26 @@ export const user = writable({
   
   const myCookie = getCookie('myCookie');
   let cookie = JSON.parse(myCookie);
+ console.log('cookie data in user-store : '+cookie);
+  if(cookie != null){
 
-  fetchDynamic('/get-user-detail','POST',cookie)
-    .then(data => {
-        data = data[0]
-        user.update((userData) =>{
-
-        userData.firstname = data.first_name
-        userData.lastname = data.last_name
-        userData.email = data.email
-        userData.phoneNumber = data.phone_number
-        userData.id = data.user_lid
-        userData.profilPicUrl = data.profil_pic_url
-        userData.userBio = data.profil_bio
-        userData.address = data.address
-        userData.role = data.name
-        document.documentElement.style.setProperty("--profilUrl", `url(${data.profil_pic_url})`);
-        return userData;
-    })
-
-})
+      fetchDynamic('/get-user-detail','POST',cookie)
+      .then(data => {
+          data = data[0]
+          user.update((userData) =>{
+              
+              userData.firstname = data.first_name
+              userData.lastname = data.last_name
+              userData.email = data.email
+              userData.phoneNumber = data.phone
+              userData.id = data.user_lid
+              userData.profilPicUrl = data.profil_pic_url
+              userData.userBio = data.profile_bio
+              userData.address = data.address
+              userData.role = data.role_name
+              document.documentElement.style.setProperty("--profilUrl", `url(${data.profile_pic_url})`);
+              return userData;
+            })
+            
+        })
+    }
