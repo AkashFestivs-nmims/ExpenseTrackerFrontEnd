@@ -1,12 +1,15 @@
 <script>
-    import { onMount } from "svelte";
-    import Header3 from "../components/header3.svelte";
-    import ListTransactionCard from "../components/listTransactionCard.svelte";
-    import PaymentCard from "../components/paymentCard.svelte";
-    import SideBar from "../components/sideBar.svelte";
-    import TheamGraph1 from "../components/theamGraph1.svelte";
-    import TheamModal from "../components/theamModal.svelte";
-    import { isTeamModalopen } from "../store/theamModalStore";
+import { onMount } from "svelte";
+import Header3 from "../components/header3.svelte";
+import ListTransactionCard from "../components/listTransactionCard.svelte";
+import PaymentCard from "../components/paymentCard.svelte";
+import SideBar from "../components/sideBar.svelte";
+import TheamGraph1 from "../components/theamGraph1.svelte";
+import TheamModal from "../components/theamModal.svelte";
+import { isTeamModalopen } from "../store/theamModalStore";
+import { user } from './../store/user-store.js';
+
+
 
 </script>
 

@@ -1,5 +1,6 @@
 <script>
     import { isProfilClick } from "../store/profileUpdate";
+    import { user } from "../store/user-store";
     import ProfilDropDown from "./profilDropDown.svelte";
 
 
@@ -16,6 +17,7 @@
             document.documentElement.style.setProperty("--sideBarInOut", "0px");
         }
     }
+
 
 </script>
 {#if $isProfilClick.isOpen}

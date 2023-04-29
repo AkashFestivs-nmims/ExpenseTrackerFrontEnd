@@ -4,15 +4,9 @@
 import { onMount } from "svelte";
 import { Router, Link } from 'svelte-routing';
 import { user } from './../store/user-store.js';
-import {fetchDynamic} from "../Script/Script";
-
-let dashboardCompObj = '';
+import { sideBarComp } from "../store/sideBar-store.js";
 
 
-onMount(async() =>{
-    let sendObj = await {'role' : $user.role};
-    dashboardCompObj = await fetchDynamic('/get-dashboard-comp','POST',sendObj);
-})
 let currentUrl = '';
 
 onMount(() => {
@@ -29,7 +23,7 @@ onMount(() => {
     <div class="sideBarBody">
         <div class="div">
             <ul>
-                {#each dashboardCompObj as obj}
+                {#each $sideBarComp.dashboardCompObj as obj}
                 <li class:active={currentUrl.includes(obj.link)}> 
                     <Link to={obj.link} class="link">
                         <div class="div">
