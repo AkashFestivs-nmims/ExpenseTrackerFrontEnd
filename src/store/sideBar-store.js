@@ -1,5 +1,5 @@
 import { writable,readable } from "svelte/store";
-import {fetchDynamic} from "../Script/Script";
+import {fetchDynamic, getCookie} from "../Script/Script";
 import { user } from './../store/user-store.js';
 import { derived } from 'svelte/store';
 
@@ -12,22 +12,20 @@ export const sideBarComp = writable({
 
 });
 
+const myCookie = getCookie('myCookie');
+let cookie = JSON.parse(myCookie);
 
-const userRole = derived(user, $user => $user.role);
 
-let role = userRole.subscribe(async role =>{
-    console.log('Current user role:', role);
-    let sendObj = {'role' : role}
-    let dashBoardCompObjFromDB =await fetchDynamic('/get-dashboard-comp','POST',sendObj)
+
+    let dashBoardCompObjFromDB =await fetchDynamic('/get-dashboard-comp','POST',cookie)
 
     sideBarComp.update((data) => {
 
         data.dashboardCompObj = dashBoardCompObjFromDB;
         return data;
+    });
 
-})
 
-})
 
 
 
