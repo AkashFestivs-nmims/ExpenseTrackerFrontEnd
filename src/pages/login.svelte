@@ -56,15 +56,13 @@ let password = '';
 
             const cookieValue = {'username' : userinfo.email,'role' : userinfo.role_name};
             console.log('cookei value : ',cookieValue);
-            let key = setEncryptedCookie('expenseTracker',cookieValue);
-
-            property.update((data) =>{
-                data.key = key[0]
-                return data;
-            })
-
-            console.log('key :',key[0]);
-
+                if(cookieValue.username != null && cookieValue.role != null){
+                    let key = setEncryptedCookie('expenseTracker',cookieValue);
+                    property.update((data) =>{
+                    data.key = key[0]
+                    return data;
+                })
+            }
 
             navigate('/theamDashboard');
 

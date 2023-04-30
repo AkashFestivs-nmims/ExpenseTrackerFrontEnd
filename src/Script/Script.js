@@ -36,8 +36,13 @@ export function setEncryptedCookie(cookieName, cookieValue) {
 }
 
 export function getDecryptedCookie(cookieName) {
-  const encryptedCookie = Cookies.get(cookieName);
-  const decrypted = CryptoJS.AES.decrypt(encryptedCookie, key);
-  const decryptedValue = JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
-  return decryptedValue;
+    const encryptedCookie = Cookies.get(cookieName);
+    const decrypted = CryptoJS.AES.decrypt(encryptedCookie, key);
+    const decryptedValue = JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
+    return decryptedValue;
+
+}
+
+export function destroyCookie(cookieName) {
+  Cookies.remove(cookieName);
 }

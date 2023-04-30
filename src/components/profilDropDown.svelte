@@ -4,7 +4,7 @@ import { user } from './../store/user-store.js';
 import { Router, Link, navigate } from 'svelte-routing';
 import {isProfilClick} from "../store/profileUpdate";
 import { backInOut, bounceInOut, circInOut, cubicInOut, quadInOut, sineOut } from 'svelte/easing';
-import {  } from "../Script/Script.js";
+import { destroyCookie, getDecryptedCookie } from "../Script/Script.js";
 
 let range = '60%';
 
@@ -20,10 +20,11 @@ let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profile','link':'/updatePr
                 {'icon':'/svg/creditCard.svg','title':'Bank','link':'','name':'Bank Account'},
                 {'icon':'/svg/group.svg','title':'Group','link':'','name':'My Peoples'}]
 
-// function logOut(){
-//     deleteCookie('myCookie');
-//     navigate('/login')
-// }
+
+function logOut(){
+    destroyCookie('expenseTracker');
+    navigate('/login')
+}
 
 </script>
 
@@ -61,7 +62,7 @@ let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profile','link':'/updatePr
     </div>
     <hr>
     <div>
-        <button class="btn btn-primary" > LogOut</button>
+        <button class="btn btn-primary" on:click={logOut}> LogOut</button>
     </div>
 
 </div>
