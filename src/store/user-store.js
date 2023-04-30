@@ -1,5 +1,6 @@
 import { writable } from "svelte/store";
-import {fetchDynamic, getCookie} from "../Script/Script";
+import {fetchDynamic,getDecryptedCookie} from "../Script/Script";
+import { property } from "./property-store";
 
 
 export const user = writable({
@@ -16,12 +17,12 @@ export const user = writable({
 
 
   
-  const myCookie = getCookie('myCookie');
-  let cookie = JSON.parse(myCookie);
- console.log('cookie data in user-store : '+cookie);
-  if(cookie != null){
+ const myCookie = getDecryptedCookie('expenseTracker');
+ console.log('mycookeivalue in cookie Decript:', myCookie);
 
-      fetchDynamic('/get-user-detail','POST',cookie)
+  if(myCookie != null){
+
+      fetchDynamic('/get-user-detail','POST',myCookie)
       .then(data => {
           data = data[0]
           user.update((userData) =>{

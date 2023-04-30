@@ -1,7 +1,5 @@
 import { writable,readable } from "svelte/store";
-import {fetchDynamic, getCookie} from "../Script/Script";
-import { user } from './../store/user-store.js';
-import { derived } from 'svelte/store';
+import {fetchDynamic, getDecryptedCookie} from "../Script/Script";
 
 
 let dashboardCompObj;
@@ -12,11 +10,11 @@ export const sideBarComp = writable({
 
 });
 
-const myCookie = getCookie('myCookie');
-let cookie = JSON.parse(myCookie);
-console.log('cookie Data in sideBar : '+cookie);
-if(cookie != null){
-    let dashBoardCompObjFromDB =await fetchDynamic('/get-dashboard-comp','POST',cookie)
+const myCookie = getDecryptedCookie('expenseTracker');
+
+console.log('cookie Data in sideBar : '+myCookie);
+if(myCookie != null){
+    let dashBoardCompObjFromDB =await fetchDynamic('/get-dashboard-comp','POST',myCookie)
     
     sideBarComp.update((data) => {
         

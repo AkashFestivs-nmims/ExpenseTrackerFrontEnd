@@ -1,11 +1,10 @@
 <script>
 import Alerts from './../components/alerts.svelte';
 import {setAlert} from '../store/alert-store.js';
-import { onMount } from 'svelte';
-import { Router, Link } from 'svelte-routing';
-import { fetchDynamic } from '../Script/Script';
+import { fetchDynamic, setEncryptedCookie} from '../Script/Script';
 import { user } from './../store/user-store.js';
 import { navigate } from 'svelte-routing';
+import { property } from '../store/property-store';
 
 
 let username = '';
@@ -56,9 +55,15 @@ let password = '';
             })
 
             const cookieValue = {'username' : userinfo.email,'role' : userinfo.role_name};
-            const expirationTime = 24 * 60 * 60 * 1000; // 1 day in milliseconds
-            const expirationDate = new Date(Date.now() + expirationTime).toUTCString();
-            document.cookie = `myCookie=${JSON.stringify(cookieValue)}; expires=${expirationDate}; path=/`;
+            console.log('cookei value : ',cookieValue);
+            let key = setEncryptedCookie('expenseTracker',cookieValue);
+
+            property.update((data) =>{
+                data.key = key[0]
+                return data;
+            })
+
+            console.log('key :',key[0]);
 
 
             navigate('/theamDashboard');
