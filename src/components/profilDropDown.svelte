@@ -4,7 +4,8 @@ import { user } from './../store/user-store.js';
 import { Router, Link, navigate } from 'svelte-routing';
 import {isProfilClick} from "../store/profileUpdate";
 import { backInOut, bounceInOut, circInOut, cubicInOut, quadInOut, sineOut } from 'svelte/easing';
-import { deleteCookie } from "../Script/Script.js";
+import {  } from "../Script/Script.js";
+
 let range = '60%';
 
 function closeDropDown(e) {
@@ -19,10 +20,10 @@ let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profile','link':'/updatePr
                 {'icon':'/svg/creditCard.svg','title':'Bank','link':'','name':'Bank Account'},
                 {'icon':'/svg/group.svg','title':'Group','link':'','name':'My Peoples'}]
 
-function logOut(){
-    deleteCookie('myCookie');
-    navigate('/login')
-}
+// function logOut(){
+//     deleteCookie('myCookie');
+//     navigate('/login')
+// }
 
 </script>
 
@@ -60,7 +61,7 @@ function logOut(){
     </div>
     <hr>
     <div>
-        <button class="btn btn-primary" on:click={logOut}> LogOut</button>
+        <button class="btn btn-primary" > LogOut</button>
     </div>
 
 </div>
