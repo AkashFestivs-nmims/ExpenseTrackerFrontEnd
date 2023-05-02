@@ -19,8 +19,12 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@sveltejs/adapter-static": "^2.0.2",
     "bootstrap": "^5.2.3",
     "chart.js": "^4.2.1",
+    "crypto-js": "^4.1.1",
+    "js-cookie": "^3.0.5",
+    "svelte-preprocess": "^5.0.3",
     "svelte-routing": "^1.6.0"
   }
 }
