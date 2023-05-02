@@ -54,9 +54,9 @@ let password = '';
                 return userData;
             })
 
-            const cookieValue = {'username' : userinfo.email,'role' : userinfo.role_name};
+            const cookieValue = {'key' : userinfo.key};
             console.log('cookei value : ',cookieValue);
-                if(cookieValue.username != null && cookieValue.role != null){
+                if(cookieValue.key != null){
                     let key = setEncryptedCookie('expenseTracker',cookieValue);
                     property.update((data) =>{
                     data.key = key[0]

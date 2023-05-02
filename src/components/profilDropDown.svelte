@@ -4,7 +4,10 @@ import { user } from './../store/user-store.js';
 import { Router, Link, navigate } from 'svelte-routing';
 import {isProfilClick} from "../store/profileUpdate";
 import { backInOut, bounceInOut, circInOut, cubicInOut, quadInOut, sineOut } from 'svelte/easing';
-import { destroyCookie, getDecryptedCookie } from "../Script/Script.js";
+import { destroyCookie } from "../Script/Script.js";
+import {fetchDynamic,getDecryptedCookie} from "../Script/Script";
+import Cookies from 'js-cookie';
+
 
 let range = '60%';
 
@@ -21,9 +24,25 @@ let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profile','link':'/updatePr
                 {'icon':'/svg/group.svg','title':'Group','link':'','name':'My Peoples'}]
 
 
-function logOut(){
-    destroyCookie('expenseTracker');
-    navigate('/login')
+async function logOut(){
+    
+    console.log('Inside Logout');
+    if(Cookies.get('expenseTracker')){
+        const myCookie = getDecryptedCookie('expenseTracker');
+        if(myCookie != null){
+            try{
+
+                let data = await fetchDynamic('/logout','POST',myCookie);
+                console.log('Logout : ',data);
+                destroyCookie('expenseTracker');
+                navigate('/login')
+
+            }catch (err) {
+                console.log('Error in logout : ',err)
+            }
+        }
+    }
+
 }
 
 </script>

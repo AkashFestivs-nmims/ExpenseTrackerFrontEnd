@@ -1,5 +1,7 @@
 import CryptoJS from 'crypto-js';
 import Cookies from 'js-cookie';
+import { navigate } from 'svelte-routing';
+
 
 const API_URL = 'http://localhost:5000';
 const key = 'koGhM1FeahNCWXGSiNfiQ6PPtTsJcR8YfDxWxcunMZREoR7MKQ9daf/su69VCruuxUMt3/SZO4f4fC1JCoIS7jWcXjDbYFwVeZRLsV/U9xF65+VTstcvzbTpAFDE+6CBsT4oR6jR+McIdTtl6rF6Wt2BaT1CdDoxkXLESoAhde/tPkpv3vSe+y7kWMWHyuJdUp3V8Pb1uDSwP1UjGUW9rCijvw/F+IWaPhJfqVeglkClIiyjtW04uuya7LiQE6RlH9SU3SUkAqUAsXrVgnNg+1ct5uxn1nbV2dbxsclOzI4NmZSWVv+od/XZ446SXX73QBVUvqaHLIWl9TUN3JZJRg=='
@@ -21,6 +23,7 @@ export function fetchDynamic(url, method, data) {
                 return resolve(await response.json());
             } else {
                 return reject(await response.json())
+
             }
         } catch (error) {
             reject(error)
@@ -32,7 +35,7 @@ export function fetchDynamic(url, method, data) {
 export function setEncryptedCookie(cookieName, cookieValue) {
   const encrypted = CryptoJS.AES.encrypt(JSON.stringify(cookieValue), key);
   Cookies.set(cookieName, encrypted.toString(), { expires: 1, secure: true, sameSite: 'strict' });
-  return [key.toString()]; // return the key as an array with one element
+  return [key.toString()]; 
 }
 
 export function getDecryptedCookie(cookieName) {

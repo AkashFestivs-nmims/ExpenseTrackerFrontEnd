@@ -1,13 +1,24 @@
 <script>
-	import UpdateProfile from './pages/updateProfile.svelte';
-	import Login from './pages/login.svelte';
-	import Credit from './pages/credit.svelte';
-    import {Router, Route, Link, navigate} from 'svelte-routing';
-    import Modal from "./components/modal.svelte";
-    import Dashboard from './pages/dashboard.svelte';
-    import Debit from './pages/debit.svelte';
-    import TheamDashboad from './pages/theamDashboad.svelte';
-    import FullTransactionList from './pages/fullTransactionList.svelte';
+import UpdateProfile from './pages/updateProfile.svelte';
+import Login from './pages/login.svelte';
+import Credit from './pages/credit.svelte';
+import {Router, Route, Link, navigate} from 'svelte-routing';
+import Modal from "./components/modal.svelte";
+import Dashboard from './pages/dashboard.svelte';
+import Debit from './pages/debit.svelte';
+import TheamDashboad from './pages/theamDashboad.svelte';
+import FullTransactionList from './pages/fullTransactionList.svelte';
+import Cookies from 'js-cookie';
+
+if(Cookies.get('expenseTracker')){
+    let path = window.location.pathname;
+    console.log('Path : ',path);
+    if(path != null){
+        navigate(path);
+    }else{
+        navigate('/theamDashboard');
+    }
+}
 
 
 </script>
