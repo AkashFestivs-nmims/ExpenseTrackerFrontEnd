@@ -7,7 +7,7 @@ import SideBar from "../components/sideBar.svelte";
 import TheamGraph1 from "../components/theamGraph1.svelte";
 import TheamModal from "../components/theamModal.svelte";
 import { isTeamModalopen } from "../store/theamModalStore";
-import { user } from './../store/user-store.js';
+
 
 
 

@@ -1,6 +1,10 @@
 <script>
     import { isProfilClick } from "../store/profileUpdate";
     import ProfilDropDown from "./profilDropDown.svelte";
+    import {fetchDynamic, getDecryptedCookie} from "../Script/Script";
+    import Cookies from 'js-cookie';
+    import { ProfilDropDownList } from "../store/profileDropDown-store";
+    import { onMount } from "svelte";
 
 
 
@@ -16,6 +20,25 @@
             document.documentElement.style.setProperty("--sideBarInOut", "0px");
         }
     }
+
+    onMount(async() =>{
+
+    if(Cookies.get('expenseTracker')){
+
+    try{
+
+        const myCookie = getDecryptedCookie('expenseTracker');
+
+        if(myCookie != null){
+            let ProfilDropDownListFromDB =await fetchDynamic('/get-profie-drop-down-list','POST',myCookie)
+            ProfilDropDownList.set(ProfilDropDownListFromDB.profil_drop_down_list ?? [])
+        }
+    }catch(err){
+        
+        document.location.href = '/theamDashboard';
+    }
+    }
+})
 
 
 </script>
@@ -34,6 +57,7 @@
         <input type="text"  class="form-control"/>
     </div>
     <div class="col-md-8 headerLeft">
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div class="profilSettings"  on:click={() => $isProfilClick.isOpen = !$isProfilClick.isOpen}></div>
         <div class="profileSettingDropDown"></div>
     </div>

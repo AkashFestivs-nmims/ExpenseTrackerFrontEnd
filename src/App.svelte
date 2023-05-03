@@ -1,4 +1,5 @@
 <script>
+import ErrorPage from './pages/errorPage.svelte';
 import UpdateProfile from './pages/updateProfile.svelte';
 import Login from './pages/login.svelte';
 import Credit from './pages/credit.svelte';
@@ -13,7 +14,7 @@ import Cookies from 'js-cookie';
 if(Cookies.get('expenseTracker')){
     let path = window.location.pathname;
     console.log('Path : ',path);
-    if(path != null){
+    if(path != null && path != '/login'){
         navigate(path);
     }else{
         navigate('/theamDashboard');
@@ -36,4 +37,5 @@ if(Cookies.get('expenseTracker')){
         <Route path='/login'><Login /></Route>
         <Route path='/updateProfile'><UpdateProfile /> </Route>
         <Route path='/fullTransactionList'><FullTransactionList /> </Route>
+        <Route path='*'><ErrorPage /> </Route>
 </Router>

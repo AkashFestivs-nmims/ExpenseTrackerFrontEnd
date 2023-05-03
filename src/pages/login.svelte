@@ -64,7 +64,8 @@ let password = '';
                 })
             }
 
-            navigate('/theamDashboard');
+            document.location.href = '/theamDashboard';
+            // navigate('/theamDashboard');
 
 
         }else{

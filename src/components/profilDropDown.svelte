@@ -7,6 +7,7 @@ import { backInOut, bounceInOut, circInOut, cubicInOut, quadInOut, sineOut } fro
 import { destroyCookie } from "../Script/Script.js";
 import {fetchDynamic,getDecryptedCookie} from "../Script/Script";
 import Cookies from 'js-cookie';
+import { ProfilDropDownList } from "../store/profileDropDown-store.js";
 
 
 let range = '60%';
@@ -19,10 +20,6 @@ function closeDropDown(e) {
 }
 
 
-let profilUpdate = [{'icon':'/svg/rupee.svg','title':'Profile','link':'/updateProfile','name':'Profile'},
-                {'icon':'/svg/creditCard.svg','title':'Bank','link':'','name':'Bank Account'},
-                {'icon':'/svg/group.svg','title':'Group','link':'','name':'My Peoples'}]
-
 
 async function logOut(){
     
@@ -31,19 +28,22 @@ async function logOut(){
         const myCookie = getDecryptedCookie('expenseTracker');
         if(myCookie != null){
             try{
-
                 let data = await fetchDynamic('/logout','POST',myCookie);
                 console.log('Logout : ',data);
                 destroyCookie('expenseTracker');
-                navigate('/login')
-
+                // navigate('/login')
+                document.location.href = '/login';
             }catch (err) {
                 console.log('Error in logout : ',err)
             }
         }
     }
-
 }
+
+
+
+// @ts-ignore
+$: console.log('profilDropDownList : ',$ProfilDropDownList);
 
 </script>
 
@@ -70,11 +70,11 @@ async function logOut(){
             <b>{range.split('%')[0]} </b>
             <div class="progressBar" style="--range:{range}"></div>
         </div>
-        {#each profilUpdate as obj}
-            <Link to={obj.link} class="link">
+        {#each $ProfilDropDownList as obj, index}
+            <Link to={obj.drop_down_link ?? ''} class="link">
                 <div class="dropDownBtn">
-                    <object data={obj.icon} title={obj.title} style="width: 40px; height: 40px;"></object>
-                    <b>{obj.name}</b>
+                    <object data={obj.drop_down_icons} title={obj.drop_down_name} style="width: 40px; height: 40px;"></object>
+                    <b>{obj.drop_down_name}</b>
                 </div>
             </Link>
         {/each}

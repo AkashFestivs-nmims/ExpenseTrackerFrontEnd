@@ -1,7 +1,7 @@
 import { writable,readable } from "svelte/store";
 import {fetchDynamic, getDecryptedCookie} from "../Script/Script";
 import Cookies from 'js-cookie';
-import { navigate } from 'svelte-routing';
+import { ProfilDropDownList } from "./profileDropDown-store";
 
 
 
@@ -31,7 +31,7 @@ if(Cookies.get('expenseTracker')){
         }
     }catch(err){
         
-        navigate('/login');
+        document.location.href = '/theamDashboard';
     }
 }
 

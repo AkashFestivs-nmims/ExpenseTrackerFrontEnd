@@ -21,7 +21,7 @@ google.charts.load("current", {packages:["corechart"]});
           title: 'My Daily Activities',
           pieHole: 0.2,
           legend:{position : 'right'},
-          width:770,
+          width:680,
           height:350
         };
 
@@ -53,7 +53,7 @@ google.charts.load("current", {packages:["corechart"]});
             fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
             risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
           },
-          width:770,
+          width:680,
           height:350
         };
 
