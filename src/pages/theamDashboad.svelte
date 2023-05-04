@@ -1,5 +1,4 @@
 <script>
-import { onMount } from "svelte";
 import Header3 from "../components/header3.svelte";
 import ListTransactionCard from "../components/listTransactionCard.svelte";
 import PaymentCard from "../components/paymentCard.svelte";

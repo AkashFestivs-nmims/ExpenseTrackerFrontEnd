@@ -1,4 +1,5 @@
 <script>
+	import Register from './pages/register.svelte';
 import ErrorPage from './pages/errorPage.svelte';
 import UpdateProfile from './pages/updateProfile.svelte';
 import Login from './pages/login.svelte';
@@ -11,14 +12,10 @@ import TheamDashboad from './pages/theamDashboad.svelte';
 import FullTransactionList from './pages/fullTransactionList.svelte';
 import Cookies from 'js-cookie';
 
-if(Cookies.get('expenseTracker')){
-    let path = window.location.pathname;
-    console.log('Path : ',path);
-    if(path != null && path != '/login'){
-        navigate(path);
-    }else{
-        navigate('/theamDashboard');
-    }
+let path = window.location.pathname;
+
+if(!Cookies.get('expenseTracker') && path != '/registerUser'){
+    navigate('/login');
 }
 
 
@@ -30,6 +27,7 @@ if(Cookies.get('expenseTracker')){
     <nav>
         <Link to='/dashboard'></Link>
     </nav>
+        <Route path='/registerUser'><Register /></Route>
         <Route path='/theamDashboard'><TheamDashboad /></Route>
         <Route path='/dashboard'><Dashboard /></Route>
         <Route path='/credit'><Credit /></Route>

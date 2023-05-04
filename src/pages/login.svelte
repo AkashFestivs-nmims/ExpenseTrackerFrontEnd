@@ -3,8 +3,10 @@ import Alerts from './../components/alerts.svelte';
 import {setAlert} from '../store/alert-store.js';
 import { fetchDynamic, setEncryptedCookie} from '../Script/Script';
 import { user } from './../store/user-store.js';
-import { navigate } from 'svelte-routing';
 import { property } from '../store/property-store';
+import {Router, Route, Link, navigate} from 'svelte-routing';
+
+
 
 
 let username = '';
@@ -25,7 +27,7 @@ let password = '';
         let sendobj =await {'username' : username , 'password' : password};
         let data = await fetchDynamic('/verify-user','POST',sendobj);
         let userinfo = data[0];
-        console.log('userData : ',data[0]);
+        console.log('userData : ',userinfo.message);
 
         if(!userinfo){
             setAlert.update((data) => {
@@ -112,6 +114,7 @@ let password = '';
         <div class="formTableFooter container" >
             <p><b>&#9993; Email : </b>expenseTracker@gmail.com</p>
             <p><b>&#9742; Phone : </b>9876543210</p>
+            &#127793; <a href="/registerUser" style="text-decoration: none; color: black; font-variant: all-petite-caps;">Register YourSelf</a>
         </div>
 
     </div>
