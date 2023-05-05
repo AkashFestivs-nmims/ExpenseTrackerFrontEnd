@@ -14,6 +14,9 @@ let password = '';
 
     async function loginHandeler(){
 
+        try {
+
+
         if(username.length == 0 && password.length == 0){
             setAlert.update((data) => {
             data.isOpen = true,
@@ -80,6 +83,14 @@ let password = '';
             });
 
         }
+    } catch(err) {
+            setAlert.update((data) => {
+                data.isOpen = true,
+                data.alertType = 'error',
+                data.alertmsg = err.message
+                return data;
+            });
+    }
 
 
 
@@ -114,7 +125,7 @@ let password = '';
         <div class="formTableFooter container" >
             <p><b>&#9993; Email : </b>expenseTracker@gmail.com</p>
             <p><b>&#9742; Phone : </b>9876543210</p>
-            &#127793; <a href="/registerUser" style="text-decoration: none; color: black; font-variant: all-petite-caps;">Register YourSelf</a>
+            &#127793; <Link to="/registerUser" style="text-decoration: none; color: black; font-variant: all-petite-caps;">Register YourSelf</Link>
         </div>
 
     </div>

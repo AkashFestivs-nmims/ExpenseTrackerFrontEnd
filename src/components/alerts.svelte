@@ -93,7 +93,6 @@ main{
     background-color: white;
     display: flex;
     align-items: center;
-
 }
 
 .alertIcon{

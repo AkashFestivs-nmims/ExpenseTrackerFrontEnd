@@ -16,6 +16,8 @@ let path = window.location.pathname;
 
 if(!Cookies.get('expenseTracker') && path != '/registerUser'){
     navigate('/login');
+}else if(path != '/registerUser'){
+    navigate('/theamDashboard');
 }
 
 

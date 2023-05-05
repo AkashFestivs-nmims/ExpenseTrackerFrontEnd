@@ -1,10 +1,85 @@
 <script>
+import {Router, Route, Link, navigate} from 'svelte-routing';
+import {setAlert} from '../store/alert-store.js';
+import { fetchDynamic, setEncryptedCookie} from '../Script/Script';
+
+
+    let loading = false;
+    let isChecked = false;
+
+    let first_name,last_name,phone,email,address,password,confirmPassword;
+    let phoneSpan ,passwordSpan,accountexists;
+
+    let emoji = `url('/public/icons/gif/uwuemoji.gif')`;
+
+    $: document.documentElement.style.setProperty("--emoji", emoji);
+
+    function away(){
+        emoji = `url('/public/icons/gif/mehEmoji.gif')`;
+        document.documentElement.style.setProperty("--emoji", emoji);
+    }
+
+    function again(){
+        emoji = `url('/public/icons/gif/uwuemoji.gif')`;
+        document.documentElement.style.setProperty("--emoji", emoji); 
+    }
+
+
+    async function submitHandeker(){
+        loading = true;
+        if(phone.length > 10){
+            phoneSpan="Something Fishy !";
+            emoji = `url('/public/icons/gif/noEmohi.gif')`;
+            
+            return;
+        }
+
+        if(password != confirmPassword){
+            passwordSpan="Do not match !";
+            emoji = `url('/public/icons/gif/noEmohi.gif')`;
+            return;
+        }
+
+        try{
+
+            let userObj = {'user' : [{
+                first_name,
+				last_name,
+				phone,
+				email,
+				address,
+				password
+            }]}
+
+            console.log('Send OBJ : ',JSON.stringify(userObj))
+
+            let data = await fetchDynamic('/register-user','POST',userObj);
+
+            console.log('Regustertion Data : ',data)
+
+            if(data[0].register_user?.status === 200){
+                emoji = `url('/public/icons/gif/loveEmoji.gif')`;
+                accountexists = 'You can Login NOW !';
+                loading = false;
+            }
+
+
+        }catch(err){
+            if(err.word == 'already'){
+                emoji = `url('/public/icons/gif/loveEmoji.gif')`;
+                accountexists = 'You already have an account with Us, Just Login !'
+                loading = false;
+            }
+        }
+
+    }
+
 
 </script>
 
 <main>
 
-<div class="row">
+<div class="row regForm">
     <div class="col-md-5" id="regLeft" >
         <div class="expenseTrackerIcon"></div>
         <div>
@@ -28,7 +103,68 @@
     </div>
     <div class="col-md-7" id="regRight" >
         <div class="regBody">
+                <div class="emoji">
 
+                </div>
+                <div>
+                    <h3><u style="color: black;"> Register Your-Self Here</u></h3>
+                </div>
+            <div class="userInfo">
+                <div class="row">
+                        <div class="col-md-4">
+                            <label for="firstname" >First Name :</label>
+                            <input class="form-control" type="text" id="firstname" bind:value={first_name} on:focus={again}>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="lastname" >Last Name :</label>
+                            <input class="form-control"  type="text" id="lastname" bind:value={last_name} on:focus={again}>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="phone" >Phone Number :</label><span style="color: darkred; font-size: 11px;"  id="phoneSpan">{phoneSpan ?? ''}</span>
+                            <input class="form-control"  type="text" id="phone" bind:value={phone} on:focus={again}>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7">
+                        <label for="email" >email :</label> <span style="color: black;"></span>
+                        <input class="form-control" type="text" id="email" bind:value={email} on:focus={again}>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <label for="address" >Address :</label>
+                        <input class="form-control" style="height: 80px;" type="text" id="address" bind:value={address} on:focus={again}>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <input type="checkbox" bind:checked={isChecked} id="acceptCheckBox"> <b style="color: black;">Your Privacy is our Responsibility</b>
+                </div>
+                <div class:d-none={!isChecked} class="row" style="margin-top: 10px;">
+                    <div class="col-md-5">
+                        <label for="password" >Password :</label><span style="color: darkred; font-size: 11px;">{passwordSpan ?? ''}</span>
+                        <input class="form-control" type="text" id="password" bind:value={password} on:focus={away}>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="confirmPassword" >Confirm Password :</label>
+                        <input class="form-control" type="text" id="confirmPassword" bind:value={confirmPassword} on:focus={away}>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    {#if loading}
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(241, 242, 243); display: block; shape-rendering: auto; height: 40px;" width="20px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                            <circle cx="50" cy="50" r="32" stroke-width="8" stroke="#72cbfd" stroke-dasharray="50.26548245743669 50.26548245743669" fill="none" stroke-linecap="round">
+                                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform>
+                            </circle>
+                        </svg>
+                    {:else}
+                         <button class="form-control" style="color: black;" on:click={submitHandeker}>Submit</button>
+                    {/if}
+                </div>
+            </div>
+            <div style="margin-top: 10px;">
+                <span style="color: deeppink; font-size: 20px;">{accountexists ?? ''}</span>
+                <Link to="/login">Already have an account</Link>
+            </div>
         </div>
     </div>
 </div>
@@ -37,11 +173,34 @@
 
 <style>
 
+:root{
+    --emoji : ''
+}
+
 * {
     color: white;
 }
 
-.row{
+.emoji{
+    height: 150px;
+    width: 150px;
+    background-image: var(--emoji);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100px;
+    transition: ease-in-out 0.3s;
+}
+
+label{
+    color: black;
+}
+
+input{
+    color: black;
+}
+
+.regForm{
     height: 100vh;
     background-image: url('/public/icons/regbackground.jpg');
     background-position: center center; /* Center the image horizontally and vertically */
@@ -52,7 +211,7 @@
     background-color: rgba(35, 34, 35, 0.8);
 }
 
-.row::before {
+.regForm::before {
   content: ''; /* Add an empty content to the pseudo-element */
   position: absolute; /* Set the position to absolute to position the pseudo-element */
   top: 0; /* Position the pseudo-element at the top of the element */
@@ -101,6 +260,15 @@
     border-radius: 25px;
     background-color: white;
     opacity: 0.8;
+    display: flex;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.userInfo{
+    margin-top: 20px;
 }
 
 </style>
