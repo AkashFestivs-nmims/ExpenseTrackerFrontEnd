@@ -3,7 +3,6 @@ import {Router, Route, Link, navigate} from 'svelte-routing';
 import {setAlert} from '../store/alert-store.js';
 import { fetchDynamic, setEncryptedCookie} from '../Script/Script';
 
-
     let loading = false;
     let isChecked = false;
 
@@ -30,13 +29,14 @@ import { fetchDynamic, setEncryptedCookie} from '../Script/Script';
         if(phone.length > 10){
             phoneSpan="Something Fishy !";
             emoji = `url('/public/icons/gif/noEmohi.gif')`;
-            
+            loading = false;
             return;
         }
 
         if(password != confirmPassword){
             passwordSpan="Do not match !";
             emoji = `url('/public/icons/gif/noEmohi.gif')`;
+            loading = false;
             return;
         }
 

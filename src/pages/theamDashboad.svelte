@@ -17,9 +17,7 @@ import { isTeamModalopen } from "../store/theamModalStore";
 
 
 <main>
-    {#if $isTeamModalopen.isOpen}
-         <TheamModal />
-    {/if}
+
     <PaymentCard />
     <ListTransactionCard />
     <section>

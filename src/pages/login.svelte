@@ -1,4 +1,5 @@
 <script>
+import Cookies from 'js-cookie';
 import Alerts from './../components/alerts.svelte';
 import {setAlert} from '../store/alert-store.js';
 import { fetchDynamic, setEncryptedCookie} from '../Script/Script';
@@ -6,8 +7,13 @@ import { user } from './../store/user-store.js';
 import { property } from '../store/property-store';
 import {Router, Route, Link, navigate} from 'svelte-routing';
 
+let path = window.location.pathname;
 
-
+if(!Cookies.get('expenseTracker') && path != '/registerUser'){
+    navigate('/login');
+}else if(path != '/registerUser'){
+    navigate('/theamDashboard');
+}
 
 let username = '';
 let password = ''; 
