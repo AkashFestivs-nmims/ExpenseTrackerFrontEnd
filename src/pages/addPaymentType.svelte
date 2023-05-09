@@ -13,7 +13,7 @@ import {setAlert} from '../store/alert-store.js';
     import Alerts from "../components/alerts.svelte";
 
 let paymentTypeObj = '';
-
+let searchChar = '';
 function handleClick(){
     console.log("CLick")
     isTeamModalopen.set({
@@ -22,22 +22,23 @@ function handleClick(){
         type:'add'
     })
 }
+$: {
+    (async () => {
 
-onMount(async () => {
-
-    if(Cookies.get('expenseTracker')){
-        const obj = getDecryptedCookie('expenseTracker');
-
-        if(obj != null){
-
-            let list = await fetchDynamic('/view-all-payment-type','POST',obj);
-            paymentTypeList.set(list);
-
+        if(Cookies.get('expenseTracker')){
+            const obj = getDecryptedCookie('expenseTracker');
+            obj.char =  searchChar.toUpperCase();
+            
+            if(obj != null){
+                
+                let list = await fetchDynamic('/view-all-payment-type','POST',obj);
+                paymentTypeList.set(list);
+                
+            }
+            
         }
-
-    }
-
-})
+    })()
+}
 
 async function addPaymentTypeMapping(id){
 
@@ -81,8 +82,9 @@ async function addPaymentTypeMapping(id){
             })
         }
     }
+}
 
-
+async function searchPaymnetType(){
 
 }
 
@@ -108,7 +110,7 @@ async function addPaymentTypeMapping(id){
             <h4>Add Payment Type</h4>
         </div>
         <div class="headRightDiv">
-            <input type="text" class="form-control" />
+            <input type="text" class="form-control" bind:value={searchChar} on:input={searchPaymnetType}/>
             <button class="btn btn-info">Search</button>
         </div>
     </div>
