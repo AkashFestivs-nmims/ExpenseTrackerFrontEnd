@@ -1,10 +1,18 @@
 <script>
+// @ts-nocheck
+
 
 import Header3 from "../components/header3.svelte";
 import SideBar from "../components/sideBar.svelte";
 import { isTeamModalopen } from "../store/theamModalStore";
+import {fetchDynamic,getDecryptedCookie } from '../Script/Script';
+import Cookies from 'js-cookie';
+import { onMount } from "svelte";
+import { paymentTypeList } from '../store/paymentType-store.js';
+import {setAlert} from '../store/alert-store.js';
+    import Alerts from "../components/alerts.svelte";
 
-let paymentTypeObj = [{"id" : 1, "title":"add" , "payment_icon" : "/public/icons/add.png"},{"id" : 1, "title":"add" , "payment_icon" : "/public/icons/add.png"},{"id" : 1, "title":"add" , "payment_icon" : "/public/icons/add.png"},{"id" : 1, "title":"add" , "payment_icon" : "/public/icons/add.png"},{"id" : 1, "title":"add" , "payment_icon" : "/public/icons/add.png"},{"id" : 1, "title":"add" , "payment_icon" : "/public/icons/add.png"},{"id" : 1, "title":"add" , "payment_icon" : "/public/icons/add.png"},{"id" : 1, "title":"add" , "payment_icon" : "/public/icons/add.png"},{"id" : 1, "title":"add" , "payment_icon" : "/public/icons/add.png"}]
+let paymentTypeObj = '';
 
 function handleClick(){
     console.log("CLick")
@@ -15,10 +23,81 @@ function handleClick(){
     })
 }
 
+onMount(async () => {
+
+    if(Cookies.get('expenseTracker')){
+        const obj = getDecryptedCookie('expenseTracker');
+
+        if(obj != null){
+
+            let list = await fetchDynamic('/view-all-payment-type','POST',obj);
+            paymentTypeList.set(list);
+
+        }
+
+    }
+
+})
+
+async function addPaymentTypeMapping(id){
+
+    try{
+
+        if(Cookies.get('expenseTracker')){
+            const obj = getDecryptedCookie('expenseTracker');
+            obj.Paymnet_type_id = id;
+            if(obj != null){
+
+                let data = await fetchDynamic('/add-payment-type-mapping','POST',obj);
+
+                console.log(data);
+
+                if(data.roeCount == 1){
+                    setAlert.update((data) => {
+                        data.isOpen = true,
+                        data.alertType = 'success',
+                        data.alertmsg = 'Item successfully added to your list'
+                        return data;
+            })
+                }
+            }
+        }
+
+    }catch(err){
+        
+        if(err.code == 409){
+            setAlert.update((data) => {
+                data.isOpen = true,
+                data.alertType = 'warning',
+                data.alertmsg = 'You have this in your List!'
+                return data;
+            })
+        }else{
+            setAlert.update((data) => {
+                data.isOpen = true,
+                data.alertType = 'error',
+                data.alertmsg = 'Oops ! Somthing went wrong.'
+                return data;
+            })
+        }
+    }
+
+
+
+}
+
+
+
+
 </script>
+{#if $setAlert.isOpen}
+    <Alerts />
+{/if}
 
 <SideBar />
 <Header3 />
+
+
 
 <main>
 
@@ -34,8 +113,9 @@ function handleClick(){
         </div>
     </div>
     <div class="paymentTypeBody">
-        {#each paymentTypeObj as obj}
-            <div class="paymentTypeCicle" title={obj.title} data-id={obj.id}>
+        {#each $paymentTypeList as obj}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <div class="paymentTypeCicle" title={obj.payment_name} data-id={obj.id} on:click={addPaymentTypeMapping(obj.id)}>
                 <img src={obj.payment_icon} alt="add">
             </div>
         {/each}
@@ -118,6 +198,7 @@ main{
     display: grid;
     justify-content: center;
     place-items: center;
+    overflow: hidden;
 }
 
 .paymentTypeCicle:active {

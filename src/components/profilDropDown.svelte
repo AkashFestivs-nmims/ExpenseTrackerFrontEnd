@@ -23,7 +23,6 @@ function closeDropDown(e) {
 
 async function logOut(){
     
-    console.log('Inside Logout');
     if(Cookies.get('expenseTracker')){
         const myCookie = getDecryptedCookie('expenseTracker');
         if(myCookie != null){

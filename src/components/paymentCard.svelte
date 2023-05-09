@@ -1,10 +1,17 @@
 <script>
+// @ts-nocheck
+
 import { Link } from "svelte-routing";
 import { isTeamModalopen } from "../store/theamModalStore";
+import {fetchDynamic,getDecryptedCookie} from "../Script/Script";
+import Cookies from 'js-cookie';
+    import { onMount } from "svelte";
 
 
-let paymentViewObj = [{'name':'Electcicity','icon':'/public/paymenyCardIcons/electricityBill.png'},{'name':'MobileRecharge','icon':'/public/paymenyCardIcons/recharge.png'},
-                    {'name':'Gas','icon':'/public/paymenyCardIcons/gas.png'}]
+// let paymentViewObj = [{'name':'Electcicity','icon':'/public/paymenyCardIcons/electricityBill.png'},{'name':'MobileRecharge','icon':'/public/paymenyCardIcons/recharge.png'},
+//                     {'name':'Gas','icon':'/public/paymenyCardIcons/gas.png'}]
+
+let paymentViewObj = '';
 
 
 function handleClick(type,icon){
@@ -14,13 +21,31 @@ function handleClick(type,icon){
         type:type
     })
 }
+
+onMount(async () => {
+
+    if(Cookies.get('expenseTracker')){
+        const myCookie = getDecryptedCookie('expenseTracker');
+        if(myCookie != null){
+            try{
+                let data = await fetchDynamic('/get-user-paymnet-type','POST',myCookie);
+                console.log('UserPaymnet Type data : ',data);
+                paymentViewObj = data;
+            }catch (err) {
+                console.log('Error in logout : ',err)
+            }
+        }
+    }
+
+});
+
 </script>
 
 <div class="paymentCard">
     {#each paymentViewObj as obj}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div class="paymentCircle" on:click={() => handleClick(obj.name,obj.icon)} title="{obj.name}">
-                <img src={obj.icon} alt={obj.name} />
+            <div class="paymentCircle" on:click={() => handleClick(obj.payment_name,obj.payment_icon)} title="{obj.payment_name}" data-paymnetType={obj.paymnet_type_id} data-userPaymentType={obj.user_payment_id}>
+                <img src={obj.payment_icon} alt={obj.payment_name} />
             </div>
     {/each}
     <Link to="/addPaymentType">

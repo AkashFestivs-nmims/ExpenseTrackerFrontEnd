@@ -72,7 +72,7 @@ main{
     position: fixed;
     z-index: 99999;
     width: 100vw;
-    height: 100vh;
+    height: 90vh;
     display: flex;
     justify-content: end;
     align-items: end ;

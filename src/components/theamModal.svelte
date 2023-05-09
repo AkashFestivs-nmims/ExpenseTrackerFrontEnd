@@ -1,6 +1,12 @@
 <script>
+import { isLoder } from './../store/loder-store.js';
 import { fade } from 'svelte/transition';
-import {isTeamModalopen} from '../store/theamModalStore'
+import {isTeamModalopen} from '../store/theamModalStore';
+import { fileToBase64,fetchDynamic,getDecryptedCookie } from '../Script/Script';
+import Cookies from 'js-cookie';
+import { paymentTypeList } from '../store/paymentType-store';
+
+
 
 function closeModal(e) {
     isTeamModalopen.update((data) => {
@@ -8,6 +14,72 @@ function closeModal(e) {
        return data;
     })
 }
+
+let imgsrc;
+async function fileUpload(e){
+
+    if(!e.target.files) return;
+
+    function countTo100(delay) {
+
+
+            for (let i = 0; i <= 100; i++) {
+                setTimeout(function() {
+                    document.documentElement.style.setProperty("--range", i+'%');
+                    if(i == 100){
+                    imgsrc = window.URL.createObjectURL(e.target.files[0]);
+                    }
+                }, i * delay);
+
+            }
+    }
+    await countTo100(10)
+}
+
+let paynmetTypeDiscription,paynmetTypeName,paymentFile;
+
+async function uploadPaymnetType(){
+
+    isLoder.set(true);
+
+    if(paynmetTypeName == null || paymentFile == null) return;
+
+    let base64String = await fileToBase64(paymentFile.files[0]);
+
+    if(Cookies.get('expenseTracker')){
+        const obj = getDecryptedCookie('expenseTracker');
+
+        obj.paynmetTypeName = await paynmetTypeName;
+        obj.paynmetTypeDiscription = await paynmetTypeDiscription;
+        obj.paymentFile = base64String;
+
+        if(obj != null){
+
+            let data = await fetchDynamic('/add-paynmet-type','POST',obj);
+
+            console.log(data.upload[0]);
+                const json = data.upload[0]
+                console.log("data inserted : ",json)
+
+                paymentTypeList.update((val) => {
+                    return [json, ...val]
+                })
+
+                isTeamModalopen.update((data) => {
+                data.isOpen = false
+                return data;
+                })
+
+
+        }
+
+    }
+
+    isLoder.set(false);
+
+}
+
+
 
 </script>
 
@@ -20,17 +92,24 @@ function closeModal(e) {
 
     <div class="addPaynmetMethodDiv">
         <h3>Add Payment Type</h3>
-        <div class="newPaynmetTypeIcon">
-            <input type="file" name="" id="">
+        <div class="fileUpload">
+            <div class="newPaynmetTypeIcon">
+                <img src={imgsrc} alt="Icon">
+            </div>
+            <div class="fileUploadInput">
+                <div class="progressBar"></div>
+                <input type="file" name="paymentIconFile" bind:this={paymentFile} id="paymentIconFile" on:change={fileUpload}>
+            </div>
         </div>
+        
         <div class="paynmetTypeNameDiv">
             <label for="paynmetTypeName">Payment Type Name :</label>
-            <input type="text" id="paynmetTypeName"><br>
+            <input type="text" id="paynmetTypeName" bind:value={paynmetTypeName}><br>
             <label for="paynmetTypeDiscription" style="margin-top: 10px;">Payment Type Discription </label>
-            <input type="text" class="form-control" id="paynmetTypeDiscription">
+            <input type="text" class="form-control" id="paynmetTypeDiscription" bind:value={paynmetTypeDiscription}>
         </div>
         <div class="divPaymentTypeSubmit">
-            <button class="btn btn-info">Submit</button>
+            <button class="btn btn-info" on:click={uploadPaymnetType}>Submit</button>
         </div>
     </div>
 
@@ -66,6 +145,16 @@ function closeModal(e) {
 </main>
 
 <style>
+
+:root{
+    --range : 100%
+}
+
+.newPaynmetTypeIcon img{
+    height: 100%;
+    width: 100%;
+}
+
 main{
     position: fixed;
     inset: 0;
@@ -78,9 +167,24 @@ main{
     align-items: center;
 }
 
+.progressBar{
+    width: var(--range);
+    height: 7px;
+    background: linear-gradient(to right,#FD8AAA, #AAFD8A);
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
 .addPaynmetMethodDiv{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px
+}
+
+.fileUpload{
+    display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px
