@@ -1,4 +1,5 @@
 <script>
+	import Wallet from './pages/wallet.svelte';
 import AddPaymentType from './pages/addPaymentType.svelte';
 import Register from './pages/register.svelte';
 import ErrorPage from './pages/errorPage.svelte';
@@ -51,6 +52,7 @@ let path = window.location.pathname;
         <Route path='/credit'><Credit /></Route>
         <Route path='/debit'><Debit /></Route>
         <Route path='/login'><Login /></Route>
+        <Route path='/wallet'><Wallet /></Route>
         <Route path='/updateProfile'><UpdateProfile /> </Route>
         <Route path='/fullTransactionList'><FullTransactionList /> </Route>
         <Route path='*'><ErrorPage /> </Route>
