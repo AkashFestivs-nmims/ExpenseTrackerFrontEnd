@@ -2,7 +2,32 @@
 import WalletAccount from './../components/walletAccount.svelte';
 import Header3 from "../components/header3.svelte";
 import SideBar from "../components/sideBar.svelte";
+import {fetchDynamic,getDecryptedCookie } from '../Script/Script';
+import Cookies from 'js-cookie';
+import {setAlert} from '../store/alert-store.js';
+import Alerts from "../components/alerts.svelte";
+import { walletList } from '../store/wallet-store';
 
+let walletObj = [{"wallet_id" : "1" , "ammount" : "500" , "wallet_name" : "HARD CASH" , "wallet_colour" : "BLUE" ,"wallet_icon" : "/icons/money.png",
+                    "currency_type" : "1"}];
+
+$: {
+    (async () => {
+
+        if(Cookies.get('expenseTracker')){
+            const obj = getDecryptedCookie('expenseTracker');
+            
+            if(obj != null){
+                
+                let list = await fetchDynamic('/get-user-wallet','POST',obj);
+                console.log('list : ',list )
+                walletList.set(list);
+                
+            }
+            
+        }
+    })()
+}
 
 </script>
 
@@ -22,7 +47,9 @@ import SideBar from "../components/sideBar.svelte";
         </div>
     </div>
     <div class="walletBody">
-        <WalletAccount />
+        {#each $walletList as obj}
+            <WalletAccount wallet_id={obj.wallet_id} ammount={obj.ammount} wallet_name={obj.wallet_name} wallet_colour={obj.wallet_colour} wallet_icon={obj.wallet_icon} currency_type_lid={obj.currency_type_lid}/>
+        {/each}
     </div>
 
 </div>

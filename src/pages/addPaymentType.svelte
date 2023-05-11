@@ -1,16 +1,13 @@
 <script>
 // @ts-nocheck
-
-
 import Header3 from "../components/header3.svelte";
 import SideBar from "../components/sideBar.svelte";
 import { isTeamModalopen } from "../store/theamModalStore";
 import {fetchDynamic,getDecryptedCookie } from '../Script/Script';
 import Cookies from 'js-cookie';
-import { onMount } from "svelte";
 import { paymentTypeList } from '../store/paymentType-store.js';
 import {setAlert} from '../store/alert-store.js';
-    import Alerts from "../components/alerts.svelte";
+import Alerts from "../components/alerts.svelte";
 
 let paymentTypeObj = '';
 let searchChar = '';
