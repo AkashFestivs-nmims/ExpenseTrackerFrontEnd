@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import {setAlert} from '../store/alert-store.js';
 import Alerts from "../components/alerts.svelte";
 import { walletList } from '../store/wallet-store';
+import { Link } from 'svelte-routing';
 
 let walletObj = [{"wallet_id" : "1" , "ammount" : "500" , "wallet_name" : "HARD CASH" , "wallet_colour" : "BLUE" ,"wallet_icon" : "/icons/money.png",
                     "currency_type" : "1"}];
@@ -30,6 +31,9 @@ $: {
 }
 
 </script>
+{#if $setAlert.isOpen}
+    <Alerts />
+{/if}
 
 <SideBar />
 <Header3 />
@@ -51,7 +55,12 @@ $: {
             <WalletAccount wallet_id={obj.wallet_id} ammount={obj.ammount} wallet_name={obj.wallet_name} wallet_colour={obj.wallet_colour} wallet_icon={obj.wallet_icon} currency_type_lid={obj.currency_type_lid}/>
         {/each}
     </div>
+    <Link to="/addNewAccount">
+        <div class="addWalletDiv">
+            <div class="addWalletBtn"></div>
 
+        </div>
+    </Link>
 </div>
 
 </main>
@@ -73,6 +82,30 @@ main{
     border-radius: 20px;
     min-width: 50vh;
     padding: 10px;
+}
+
+.addWalletDiv{
+    width: 100%;
+    height: 150px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.addWalletDiv:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.addWalletBtn{
+    height: 70px;
+    width: 70px;
+    background-image: url('/public/icons/add.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .walletHeaderDiv{

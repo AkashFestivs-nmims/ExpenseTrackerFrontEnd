@@ -1,5 +1,6 @@
 <script>
-	import Wallet from './pages/wallet.svelte';
+import AddAccount from './components/addAccount.svelte';
+import Wallet from './pages/wallet.svelte';
 import AddPaymentType from './pages/addPaymentType.svelte';
 import Register from './pages/register.svelte';
 import ErrorPage from './pages/errorPage.svelte';
@@ -15,7 +16,7 @@ import Cookies from 'js-cookie';
 import { isTeamModalopen } from './store/theamModalStore';
 import TheamModal from './components/theamModal.svelte';
 import Loder from './components/loder.svelte';
-    import { isLoder } from './store/loder-store';
+import { isLoder } from './store/loder-store';
 
 let path = window.location.pathname;
 
@@ -55,6 +56,7 @@ let path = window.location.pathname;
         <Route path='/wallet'><Wallet /></Route>
         <Route path='/updateProfile'><UpdateProfile /> </Route>
         <Route path='/fullTransactionList'><FullTransactionList /> </Route>
+        <Route path='/addNewAccount'><AddAccount /> </Route>
         <Route path='*'><ErrorPage /> </Route>
         
 </Router>

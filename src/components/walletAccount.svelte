@@ -1,5 +1,8 @@
 <script>
-
+import {fetchDynamic,getDecryptedCookie } from '../Script/Script';
+import Cookies from 'js-cookie';
+import {setAlert} from '../store/alert-store.js';
+import Alerts from "../components/alerts.svelte";
 export let wallet_id,ammount,wallet_name,wallet_colour,wallet_icon,currency_type_lid;
 
 
@@ -13,7 +16,6 @@ let walletAmmount = true;
 let saveAmmountNot = true;
 let colourInput = true;
 let saveColourNot = true;
-$: document.documentElement.style.setProperty("--walletColor", wallet_colour);
 
 
 function changeAmmount(){
@@ -22,9 +24,49 @@ function changeAmmount(){
     walletAmmount = false;
 }
 
-function saveAmmount(){
+async function saveAmmount(){
     walletAmmount = true;
     saveAmmountNot = true;
+
+    try{
+        if(Cookies.get('expenseTracker')){
+                const obj = getDecryptedCookie('expenseTracker');
+                
+                if(obj != null){
+                    obj.ammount = ammount;
+                    obj.wallet_id = wallet_id;
+                    let data = await fetchDynamic('/update-wallet-ammount','POST',obj);
+
+                    if(data.roeCount == 1){
+                        setAlert.update((data) => {
+                            data.isOpen = true,
+                            data.alertType = 'success',
+                            data.alertmsg = 'The Ammount has been Updated Successfully'
+                            return data;
+                        });
+
+                    }else{
+                        setAlert.update((data) => {
+                            data.isOpen = true,
+                            data.alertType = 'error',
+                            data.alertmsg = 'You can try after some time'
+                            return data;
+                        });
+
+                    }
+                    
+                }
+                
+            }
+    }catch(err){
+        setAlert.update((data) => {
+            data.isOpen = true,
+            data.alertType = 'error',
+            data.alertmsg = 'Oops, Somthing went wrong !'
+            return data;
+        });
+
+    }
 
 }
 
@@ -33,16 +75,37 @@ function changeColour(){
     saveColourNot = false;
 }
 
-function saveColour(){
+async function saveColour(){
     colourInput = true;
     saveColourNot = true;
+
+    try{
+        if(Cookies.get('expenseTracker')){
+                const obj = getDecryptedCookie('expenseTracker');
+                if(obj != null){
+                    obj.wallet_colour = wallet_colour;
+                    obj.wallet_id = wallet_id;
+                    let data = await fetchDynamic('/update-wallet-colour','POST',obj);
+                }
+                
+            }
+    }catch(err){
+        setAlert.update((data) => {
+            data.isOpen = true,
+            data.alertType = 'error',
+            data.alertmsg = 'Oops, Somthing went wrong !'
+            return data;
+        });
+
+    }
+
 }
 
 </script>
 
 <main>
 
-<div class="walletAccountDiv" data-walletId={wallet_id}>
+<div class="walletAccountDiv" data-walletId={wallet_id} style="background-color: {wallet_colour};">
     <div class="walletAccountHead">
         <div class="walletAccountLogo">
             <img src={wallet_icon} alt="CASH">
@@ -52,7 +115,7 @@ function saveColour(){
         </div>
     </div>
     <div class="walletAccountMoney">
-        <h1><input id="walletAmmount" type="number" value={ammount} disabled={walletAmmount}/>  {@html currencyIcon}</h1>
+        <h1><input id="walletAmmount" type="number" bind:value={ammount} disabled={walletAmmount}/>  {@html currencyIcon}</h1>
     </div>
     <div class="walletAccountSetting">
         <b id="save" class:d-none={saveAmmountNot} on:click={saveAmmount} style="cursor: pointer;">&#9745;</b>
@@ -84,7 +147,6 @@ input{
 .walletAccountDiv{
     height: 150px;
     width: 330px;
-    background-color: var(--walletColor);
     border-radius: 20px;
 }
 
