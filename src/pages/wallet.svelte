@@ -22,7 +22,10 @@ $: {
                 
                 let list = await fetchDynamic('/get-user-wallet','POST',obj);
                 console.log('list : ',list )
-                walletList.set(list);
+                walletList.set({
+                    wallet : list[0].get_user_wallet.wallet,
+                    totalAmmount : list[0].get_user_wallet.total_ammount.total_ammount
+                });
                 
             }
             
@@ -47,12 +50,12 @@ $: {
         </div>
 
         <div class="totalMoneyDiv">
-            <h2>500 &#x20b9;</h2>
+            <h2>{$walletList.totalAmmount}</h2>
         </div>
     </div>
     <div class="walletBody">
-        {#each $walletList as obj}
-            <WalletAccount wallet_id={obj.wallet_id} ammount={obj.ammount} wallet_name={obj.wallet_name} wallet_colour={obj.wallet_colour} wallet_icon={obj.wallet_icon} currency_type_lid={obj.currency_type_lid}/>
+        {#each $walletList.wallet as obj}
+            <WalletAccount wallet_id={obj.wallet_id} ammount={obj.ammount} wallet_name={obj.wallet_name} wallet_colour={obj.wallet_colour} wallet_icon={obj.wallet_icon} currency_type_lid={obj.currency_type_lid} currency_name={obj.currency_name}/>
         {/each}
     </div>
     <Link to="/addNewAccount">

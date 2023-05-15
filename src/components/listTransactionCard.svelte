@@ -81,6 +81,7 @@ i{
 
 .listTranscationCard{
     margin-top: 20px;
+    min-width: 680px;
     height: 400px;
     background-color: #FFFFFF;
     border-radius: 20px;

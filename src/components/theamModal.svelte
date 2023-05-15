@@ -5,6 +5,7 @@ import {isTeamModalopen} from '../store/theamModalStore';
 import { fileToBase64,fetchDynamic,getDecryptedCookie } from '../Script/Script';
 import Cookies from 'js-cookie';
 import { paymentTypeList } from '../store/paymentType-store';
+import { walletList } from '../store/wallet-store.js';
 
 
 
@@ -79,6 +80,29 @@ async function uploadPaymnetType(){
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------
+
+$: {
+    (async () => {
+
+        if(Cookies.get('expenseTracker')){
+            const obj = getDecryptedCookie('expenseTracker');
+            
+            if(obj != null){
+                
+                let list = await fetchDynamic('/get-user-wallet','POST',obj);
+                console.log('list : ',list )
+                walletList.set({
+                    wallet : list[0].get_user_wallet.wallet,
+                    totalAmmount : list[0].get_user_wallet.total_ammount.total_ammount
+                });
+                
+            }
+            
+        }
+    })()
+}
+
 
 
 </script>
@@ -115,7 +139,7 @@ async function uploadPaymnetType(){
 
     {:else}
 
-        <div id="modalHead">
+        <div id="modalHead" data-userTypeLid={$isTeamModalopen.receiverLid} data-receiverLid={$isTeamModalopen.receiverLid}>
                 <img src="{$isTeamModalopen.icon}" alt="{$isTeamModalopen.type}"> 
                 <b>{$isTeamModalopen.type}</b>
             </div>
@@ -130,6 +154,14 @@ async function uploadPaymnetType(){
 
                         </div>
                     </div>
+                </div>
+                <div class="selectBankDiv">
+                    <select name="selectBank" id="selectBank" class="form-control">
+                        <option value="0">-- Select --</option>
+                        {#each $walletList.wallet as obj}
+                            <option value={obj.wallet_id}> {obj.wallet_name}</option>
+                        {/each}
+                    </select>
                 </div>
                 <div class="theamModalSendMoney">
                     <input type="number" class="form-control">
@@ -210,6 +242,12 @@ main{
     display: flex;
 }
 
+#modalHead img{
+    border-radius: 100px;
+    width: 100%;
+    height: 100%;
+}
+
 
 .theamModalMainBody{
     height: 290px;
@@ -267,5 +305,9 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.selectBankDiv select option{
+    
 }
 </style>

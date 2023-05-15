@@ -14,11 +14,13 @@ import Cookies from 'js-cookie';
 let paymentViewObj = '';
 
 
-function handleClick(type,icon){
+function handleClick(type,icon,accountTypeLid,receiverLid){
     isTeamModalopen.set({
         isOpen : true,
         icon:icon,
-        type:type
+        type:type,
+        accountTypeLid:accountTypeLid,
+        receiverLid : receiverLid
     })
 }
 
@@ -44,7 +46,7 @@ onMount(async () => {
 <div class="paymentCard">
     {#each paymentViewObj as obj}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div class="paymentCircle" on:click={() => handleClick(obj.payment_name,obj.payment_icon)} title="{obj.payment_name}" data-paymnetType={obj.paymnet_type_id} data-userPaymentType={obj.user_payment_id}>
+            <div class="paymentCircle" on:click={() => handleClick(obj.payment_name,obj.payment_icon,obj.account_type_lid,obj.paymnet_type_id)} title="{obj.payment_name}" data-paymnetType={obj.paymnet_type_id} data-userPaymentType={obj.user_payment_id}>
                 <img src={obj.payment_icon} alt={obj.payment_name} />
             </div>
     {/each}
@@ -60,6 +62,7 @@ onMount(async () => {
 
 .paymentCard{
     height: 120px;
+    min-width: 680px;
     background-color: #FFFFFF;
     border-radius: 20px;
     padding: 10px;
@@ -72,10 +75,11 @@ onMount(async () => {
     width: 100px;
     height: 100px;
     border-radius: 20px;
-    display: flex;
 }
 
 .paymentCircle img{
+    height: 100%;
+    width: 100%;
     align-self: center;
     width: 100%;
     border-radius: 50px;

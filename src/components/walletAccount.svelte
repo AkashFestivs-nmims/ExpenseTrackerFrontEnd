@@ -3,11 +3,11 @@ import {fetchDynamic,getDecryptedCookie } from '../Script/Script';
 import Cookies from 'js-cookie';
 import {setAlert} from '../store/alert-store.js';
 import Alerts from "../components/alerts.svelte";
-export let wallet_id,ammount,wallet_name,wallet_colour,wallet_icon,currency_type_lid;
+export let wallet_id,ammount,wallet_name,wallet_colour,wallet_icon,currency_type_lid,currency_name;
 
 
 let currencyIcon;
-if(currency_type_lid == 1){
+if(currency_type_lid){
     currencyIcon = '&#x20b9;';
 }
 
@@ -115,7 +115,7 @@ async function saveColour(){
         </div>
     </div>
     <div class="walletAccountMoney">
-        <h1><input id="walletAmmount" type="number" bind:value={ammount} disabled={walletAmmount}/>  {@html currencyIcon}</h1>
+        <h1><input id="walletAmmount" type="number" bind:value={ammount} disabled={walletAmmount}/></h1><h3> {currency_name} </h3>
     </div>
     <div class="walletAccountSetting">
         <b id="save" class:d-none={saveAmmountNot} on:click={saveAmmount} style="cursor: pointer;">&#9745;</b>
