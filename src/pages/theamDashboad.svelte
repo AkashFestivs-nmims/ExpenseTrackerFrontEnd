@@ -1,17 +1,19 @@
 <script>
+import Alerts from "../components/alerts.svelte";
 import Header3 from "../components/header3.svelte";
 import ListTransactionCard from "../components/listTransactionCard.svelte";
-    import Loder from "../components/loder.svelte";
 import PaymentCard from "../components/paymentCard.svelte";
 import SideBar from "../components/sideBar.svelte";
 import TheamGraph1 from "../components/theamGraph1.svelte";
-import TheamModal from "../components/theamModal.svelte";
-import { isTeamModalopen } from "../store/theamModalStore";
+import { setAlert } from "../store/alert-store";
 
 
 
 
 </script>
+{#if $setAlert.isOpen}
+    <Alerts />
+{/if}
 
 <SideBar />
 <Header3 />

@@ -17,10 +17,10 @@ let password = '';
 
         if(username.length == 0 && password.length == 0){
             setAlert.update((data) => {
-            data.isOpen = true,
-            data.alertType = 'warning',
-            data.alertmsg = 'Input fileds are Empty'
-            return data;
+                data.isOpen = true,
+                data.alertType = 'warning',
+                data.alertmsg = 'Input fileds are Empty'
+                return data;
             })
             return;
         }

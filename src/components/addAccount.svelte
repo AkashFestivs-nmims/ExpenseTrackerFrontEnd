@@ -188,7 +188,7 @@ main{
     border-radius: 20px;
     min-width: 50vh;
     padding: 10px;
-    background-image: url('/public/icons/building.jpg');
+    background-image: url('/public/icons/colour.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -196,6 +196,7 @@ main{
 
 input{
     background-color: inherit;
+    border: 1px solid whitesmoke;
 }
 
 .addAccountHeader{

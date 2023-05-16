@@ -6,6 +6,7 @@ import { fileToBase64,fetchDynamic,getDecryptedCookie } from '../Script/Script';
 import Cookies from 'js-cookie';
 import { paymentTypeList } from '../store/paymentType-store';
 import { walletList } from '../store/wallet-store.js';
+import { setAlert } from '../store/alert-store.js';
 
 
 
@@ -84,7 +85,6 @@ async function uploadPaymnetType(){
 
 $: {
     (async () => {
-
         if(Cookies.get('expenseTracker')){
             const obj = getDecryptedCookie('expenseTracker');
             
@@ -103,6 +103,84 @@ $: {
     })()
 }
 
+let ammount,wallet_id;
+async function sendMoney(e){
+
+    isLoder.set(true);
+    try{
+        let account_type_lid =$isTeamModalopen.receiverTypeLid;
+        let receiver_lid =$isTeamModalopen.receiverLid;
+
+        let transactionObj = {
+            "statement" : [{
+                receiver_lid,
+                receiver_type_lid : account_type_lid,
+                ammount,
+                user_wallet_lid : wallet_id,
+                transaction_message  : ''
+            }]
+        }
+
+        console.log('Transaction OBJ : ',JSON.stringify(transactionObj));
+
+        if(Cookies.get('expenseTracker')){
+            const obj = getDecryptedCookie('expenseTracker');
+            obj.transaction = transactionObj;
+            if(obj != null){
+                
+                let list = await fetchDynamic('/initialize_transaction','POST',obj);
+                console.log('Transaction Response : ',list);
+                
+                if(list.initialize_transaction.status == 200){
+
+                    isTeamModalopen.update((data) => {
+                        data.isOpen = false
+                        return data;
+                    })
+
+                    setAlert.update((data) => {
+                        data.isOpen = true,
+                        data.alertType = 'success',
+                        data.alertmsg = list.initialize_transaction.message
+                        return data;
+                    })
+                }else{
+
+                    isTeamModalopen.update((data) => {
+                        data.isOpen = false
+                        return data;
+                    })
+
+                    setAlert.update((data) => {
+                        data.isOpen = true,
+                        data.alertType = 'error',
+                        data.alertmsg = list.initialize_transaction.error[0].message
+                        return data;
+                    })
+                }
+            }
+            
+        }
+        isLoder.set(false);
+
+    }catch(err){
+        
+        isTeamModalopen.update((data) => {
+                        data.isOpen = false
+                        return data;
+        })
+
+        setAlert.update((data) => {
+                        data.isOpen = true,
+                        data.alertType = 'error',
+                        data.alertmsg = 'Transaction Failed !'
+                        return data;
+                    })
+
+        isLoder.set(false);
+    }
+
+}
 
 
 </script>
@@ -139,7 +217,7 @@ $: {
 
     {:else}
 
-        <div id="modalHead" data-userTypeLid={$isTeamModalopen.receiverLid} data-receiverLid={$isTeamModalopen.receiverLid}>
+        <div id="modalHead" data-receiverTypeLid={$isTeamModalopen.receiverTypeLid} data-receiverLid={$isTeamModalopen.receiverLid}>
                 <img src="{$isTeamModalopen.icon}" alt="{$isTeamModalopen.type}"> 
                 <b>{$isTeamModalopen.type}</b>
             </div>
@@ -156,16 +234,16 @@ $: {
                     </div>
                 </div>
                 <div class="selectBankDiv">
-                    <select name="selectBank" id="selectBank" class="form-control">
-                        <option value="0">-- Select --</option>
+                    <select name="selectBank" id="selectBank" class="form-control" bind:value={wallet_id}>
+                        <option value="0">-- Select Account --</option>
                         {#each $walletList.wallet as obj}
                             <option value={obj.wallet_id}> {obj.wallet_name}</option>
                         {/each}
                     </select>
                 </div>
                 <div class="theamModalSendMoney">
-                    <input type="number" class="form-control">
-                    <button class="btn btn-outline-primary" style="width: 80px; margin-left: 5px;"><object data="/svg/send.svg" title="sideBarButton" class="w-6 h-6"></object></button>
+                    <input type="number" class="form-control" bind:value={ammount}>
+                    <button class="btn btn-outline-primary" on:click={sendMoney} style="width: 80px; margin-left: 5px;"><object data="/svg/send.svg" title="sideBarButton" class="w-6 h-6"></object></button>
                 </div>
             </div>
         
@@ -308,6 +386,6 @@ main{
 }
 
 .selectBankDiv select option{
-    
+    font-family: 'Courier New', Courier, monospace;
 }
 </style>
